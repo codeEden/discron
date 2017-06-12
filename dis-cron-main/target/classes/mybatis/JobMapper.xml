@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.nt.open.discron.dao.JobDao">
+
+	<sql id="Base_Column_List">
+		 jobName,cron,timeout,type,url,lastExeTime,nextExeTime,status,updateTime,createTime,category,handleHost
+	</sql>
+	<sql id="pager">
+		LIMIT #{start}, #{pageSize}
+	</sql>
+	
+	<insert id="insert" keyProperty="id"
+		useGeneratedKeys="true" parameterType="job">
+		insert into Job(<include refid="Base_Column_List" />) 
+		values 
+		( #{jobName},#{cron},#{timeout},#{type},#{url},#{lastExeTime},#{nextExeTime},#{status},#{updateTime},#{createTime},#{category},#{handleHost});
+	</insert>
+	
+	<select id="getList" parameterType="job" resultType="job">
+		select <include refid="Base_Column_List" /> from Job where
+		1=1 
+		<if test="id != null">
+		  and id=#{id}
+		</if>
+		<if test="status != null">
+		  and status=#{status}
+		</if>
+		<if test="handleHost != null">
+		  and handleHost=#{handleHost}
+		</if>
+		<if test="category != null">
+		  and category=#{category}
+		</if>
+	</select>
+
+	<update id="registerHandleHost" parameterType="job">
+		update Job set handleHost=#{handleHost} where (handleHost="" or handleHost is null) and status=0 
+		<if test="category != null">
+		  and category=#{category}
+		</if>
+		 limit 1;
+	</update>
+	
+	
+</mapper>  
