@@ -11,11 +11,16 @@ import com.google.common.collect.Maps;
  * @author bjfulianqiu
  *
  */
-public class AppContext {
-
-	public static Map<String, String> jobMap=Maps.newConcurrentMap();
+public enum AppContext {
 	
-	public void addJobMap(String jobName){
-		jobMap.put(jobName, jobName);
+	APPCONTEXT;
+
+	private Map<String, Process> jobProcMap=Maps.newConcurrentMap();
+	
+	public final int NETTY_SERVER_PORT=8798;
+	
+	
+	public void addJobProcMap(String jobName,Process process){
+		jobProcMap.put(jobName, process);
 	}
 }

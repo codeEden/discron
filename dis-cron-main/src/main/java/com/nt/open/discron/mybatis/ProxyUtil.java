@@ -9,8 +9,8 @@ package com.nt.open.discron.mybatis;
  */
 public class ProxyUtil {
 
-	public static Object getProxy(Class interfaceClass){
-		InvocationHandlerImpl invocationHandlerFactory=new InvocationHandlerImpl(interfaceClass);
+	public static <T> Object getProxy(Class<T> interfaceClass){
+		InvocationHandlerImpl<T> invocationHandlerFactory=new InvocationHandlerImpl<T>(interfaceClass);
 		return invocationHandlerFactory.getProxy();
 	}
 }
