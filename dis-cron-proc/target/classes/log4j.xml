@@ -13,8 +13,8 @@
 	</appender>
 	
 	<!-- 系统启动日志输出文件 -->
-    <appender name="discron" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="File" value="D:/workspace/open_source/logs/system.log"/>
+    <appender name="proc" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="D:/workspace/open_source/logs/proc.log"/>
 		<param name="DatePattern" value="'.'yyyy-MM-dd"/>
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%d %p [%c] - %m%n"/>
@@ -27,7 +27,7 @@
 	<root>
 	  <level value="INFO"/>
 	  <appender-ref ref="stdout"/>
-	  <appender-ref ref="discron"/>
+	  <appender-ref ref="proc"/>
 	</root>
 	
 </log4j:configuration>

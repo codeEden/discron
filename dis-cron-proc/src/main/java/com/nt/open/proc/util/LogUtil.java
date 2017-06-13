@@ -6,7 +6,6 @@ package com.nt.open.proc.util;
 import java.util.Date;
 
 import org.apache.log4j.FileAppender;
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 
@@ -20,7 +19,7 @@ public class LogUtil {
 	
 	private static FileAppender fileAppender=null;
 	
-	public static void info(String message){
+	static{
 		try{
 			if(fileAppender==null){
 				
@@ -35,9 +34,17 @@ public class LogUtil {
 				
 				logger.addAppender(fileAppender);
 			}
-			logger.info(message);
 		}catch(Exception e){
-			
+			logger.error("",e);
 		}
 	}
+	
+	public static void info(String message){
+		logger.info(message);
+	}
+	
+	public static void error(String message,Throwable e){
+		logger.error(message,e);
+	}
+	
 }
