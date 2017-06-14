@@ -6,12 +6,16 @@ package com.nt.open.discron.run.netty;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author fulianqiu
  *
  */
 public class ServerHandler extends SimpleChannelHandler {
+	
+	private static Logger logger = LoggerFactory.getLogger("discron");
 	
 	private static ServerHandler serverHandler;
 	private ServerHandler(){}
@@ -32,6 +36,11 @@ public class ServerHandler extends SimpleChannelHandler {
 	 */
 	@Override  
     public void messageReceived(ChannelHandlerContext ctx, MessageEvent e)  
-            throws Exception {  
+            throws Exception {
+		logger.info("server receive message"+e.getMessage());
+//		while(true){
+//			e.getChannel().write("server 1");
+//			Thread.sleep(1000);
+//		}
     }
 }

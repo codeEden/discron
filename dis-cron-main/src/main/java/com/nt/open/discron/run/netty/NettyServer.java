@@ -4,7 +4,12 @@
 package com.nt.open.discron.run.netty;
 
 import java.net.InetSocketAddress;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.RejectedExecutionHandler;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.ChannelPipeline;
@@ -16,6 +21,7 @@ import org.jboss.netty.handler.codec.string.StringEncoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.mysql.jdbc.MiniAdmin;
 import com.nt.open.discron.util.AppContext;
 
 /**
@@ -31,9 +37,14 @@ public class NettyServer {
 
 	public void init() {
 		int cpuNum=Runtime.getRuntime().availableProcessors(); 
+		BlockingQueue<Runnable> queue=new LinkedBlockingQueue<Runnable>(200);
+		RejectedExecutionHandler rejectHandler=new ThreadPoolExecutor.CallerRunsPolicy();
+		ThreadPoolExecutor bossExecutor=new ThreadPoolExecutor(cpuNum+2, 50, 0L, TimeUnit.MILLISECONDS, queue, rejectHandler);
+		ThreadPoolExecutor workerExecutor=new ThreadPoolExecutor(cpuNum+2, 50, 0L, TimeUnit.MILLISECONDS, queue, rejectHandler);
+		
 		bootstrap = new ServerBootstrap(new NioServerSocketChannelFactory(  
-                Executors.newFixedThreadPool(cpuNum+2), //boss 监听请求，并分派给slave进行处理  
-                Executors.newFixedThreadPool(cpuNum+2)//slave 处理请求，将其丢到线程池中处理  
+				bossExecutor, //boss 监听请求，并分派给slave进行处理  
+				workerExecutor//slave 处理请求，将其丢到线程池中处理  
                                          ));
 		handler = ServerHandler.getServerHandler();
 
@@ -61,6 +72,12 @@ public class NettyServer {
 	public void start() {
 		bootstrap.bind(new InetSocketAddress(AppContext.APPCONTEXT.NETTY_SERVER_PORT));
 		logger.info("服务器启动,端口:{}" , AppContext.APPCONTEXT.NETTY_SERVER_PORT);
+	}
+	
+	public static void main(String[] args) {
+		NettyServer nettyServer=new NettyServer();
+		nettyServer.init();
+		nettyServer.start();
 	}
 
 	/**
