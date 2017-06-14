@@ -1,0 +1,141 @@
+2017-06-14 16:28:50,570 INFO [com.nt.open.proc.util.LogUtil] - runProc start....jobName=discrontest1
+2017-06-14 16:28:50,579 ERROR [com.nt.open.proc.util.LogUtil] - ÈÎÎñÖ´ÐÐ´íÎó
+java.lang.NoSuchMethodException: com.test.Test.execute(java.lang.String)
+	at java.lang.Class.getMethod(Unknown Source)
+	at com.nt.open.proc.main.ExeThread.run(ExeThread.java:39)
+	at com.nt.open.proc.main.RunProc.main(RunProc.java:33)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader.main(JarRsrcLoader.java:58)
+2017-06-14 16:28:50,581 INFO [com.nt.open.proc.util.LogUtil] - runProc end....jobName=discrontest1
+2017-06-14 16:28:55,572 INFO [com.nt.open.proc.util.LogUtil] - runProc start....jobName=discrontest1
+2017-06-14 16:28:55,581 ERROR [com.nt.open.proc.util.LogUtil] - ÈÎÎñÖ´ÐÐ´íÎó
+java.lang.NoSuchMethodException: com.test.Test.execute(java.lang.String)
+	at java.lang.Class.getMethod(Unknown Source)
+	at com.nt.open.proc.main.ExeThread.run(ExeThread.java:39)
+	at com.nt.open.proc.main.RunProc.main(RunProc.java:33)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader.main(JarRsrcLoader.java:58)
+2017-06-14 16:28:55,583 INFO [com.nt.open.proc.util.LogUtil] - runProc end....jobName=discrontest1
+2017-06-14 16:29:00,572 INFO [com.nt.open.proc.util.LogUtil] - runProc start....jobName=discrontest1
+2017-06-14 16:29:00,583 ERROR [com.nt.open.proc.util.LogUtil] - ÈÎÎñÖ´ÐÐ´íÎó
+java.lang.NoSuchMethodException: com.test.Test.execute(java.lang.String)
+	at java.lang.Class.getMethod(Unknown Source)
+	at com.nt.open.proc.main.ExeThread.run(ExeThread.java:39)
+	at com.nt.open.proc.main.RunProc.main(RunProc.java:33)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader.main(JarRsrcLoader.java:58)
+2017-06-14 16:29:00,585 INFO [com.nt.open.proc.util.LogUtil] - runProc end....jobName=discrontest1
+2017-06-14 16:29:05,587 INFO [com.nt.open.proc.util.LogUtil] - runProc start....jobName=discrontest1
+2017-06-14 16:29:05,599 ERROR [com.nt.open.proc.util.LogUtil] - ÈÎÎñÖ´ÐÐ´íÎó
+java.lang.NoSuchMethodException: com.test.Test.execute(java.lang.String)
+	at java.lang.Class.getMethod(Unknown Source)
+	at com.nt.open.proc.main.ExeThread.run(ExeThread.java:39)
+	at com.nt.open.proc.main.RunProc.main(RunProc.java:33)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader.main(JarRsrcLoader.java:58)
+2017-06-14 16:29:05,602 INFO [com.nt.open.proc.util.LogUtil] - runProc end....jobName=discrontest1
+2017-06-14 16:53:54,084 INFO [com.nt.open.proc.util.LogUtil] - runProc start....jobName=discrontest1
+2017-06-14 16:55:20,715 INFO [com.nt.open.proc.util.LogUtil] - runProc start....jobName=discrontest1
+2017-06-14 16:55:57,895 ERROR [com.nt.open.proc.util.LogUtil] - ä»»åŠ¡æ‰§è¡Œé”™è¯¯
+java.lang.NullPointerException
+	at sun.net.util.URLUtil.urlNoFragString(Unknown Source)
+	at sun.misc.URLClassPath.getLoader(Unknown Source)
+	at sun.misc.URLClassPath.getResource(Unknown Source)
+	at java.net.URLClassLoader$1.run(Unknown Source)
+	at java.net.URLClassLoader$1.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(Unknown Source)
+	at java.lang.ClassLoader.loadClass(Unknown Source)
+	at java.lang.ClassLoader.loadClass(Unknown Source)
+	at com.nt.open.proc.main.ExeThread.run(ExeThread.java:38)
+	at com.nt.open.proc.main.RunProc.main(RunProc.java:39)
+2017-06-14 16:55:57,905 INFO [com.nt.open.proc.util.LogUtil] - runProc end....jobName=discrontest1
+2017-06-14 16:57:56,542 INFO [com.nt.open.proc.util.LogUtil] - runProc start....jobName=discrontest1
+2017-06-14 16:58:03,449 ERROR [com.nt.open.proc.util.LogUtil] - ä»»åŠ¡æ‰§è¡Œé”™è¯¯
+java.lang.ArrayIndexOutOfBoundsException: 0
+	at com.nt.open.proc.main.ExeThread.getUrls(ExeThread.java:58)
+	at com.nt.open.proc.main.ExeThread.run(ExeThread.java:37)
+	at com.nt.open.proc.main.RunProc.main(RunProc.java:39)
+2017-06-14 16:58:03,458 INFO [com.nt.open.proc.util.LogUtil] - runProc end....jobName=discrontest1
+2017-06-14 17:01:45,505 INFO [com.nt.open.proc.util.LogUtil] - runProc start....jobName=discrontest1
+2017-06-14 17:02:20,313 ERROR [com.nt.open.proc.util.LogUtil] - ä»»åŠ¡æ‰§è¡Œé”™è¯¯
+java.lang.NoSuchMethodException: com.test.Test.execute(java.lang.String)
+	at java.lang.Class.getMethod(Unknown Source)
+	at com.nt.open.proc.main.ExeThread.run(ExeThread.java:41)
+	at com.nt.open.proc.main.RunProc.main(RunProc.java:39)
+2017-06-14 17:02:20,323 INFO [com.nt.open.proc.util.LogUtil] - runProc end....jobName=discrontest1
+2017-06-14 17:03:38,364 INFO [com.nt.open.proc.util.LogUtil] - runProc start....jobName=discrontest1
+2017-06-14 17:03:50,948 ERROR [com.nt.open.proc.util.LogUtil] - ä»»åŠ¡æ‰§è¡Œé”™è¯¯
+java.lang.IllegalArgumentException: wrong number of arguments
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at com.nt.open.proc.main.ExeThread.run(ExeThread.java:43)
+	at com.nt.open.proc.main.RunProc.main(RunProc.java:39)
+2017-06-14 17:03:50,957 INFO [com.nt.open.proc.util.LogUtil] - runProc end....jobName=discrontest1
+2017-06-14 17:04:14,326 INFO [com.nt.open.proc.util.LogUtil] - runProc start....jobName=discrontest1
+2017-06-14 17:04:14,334 ERROR [com.nt.open.proc.util.LogUtil] - ä»»åŠ¡æ‰§è¡Œé”™è¯¯
+java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at com.nt.open.proc.main.ExeThread.run(ExeThread.java:43)
+	at com.nt.open.proc.main.RunProc.main(RunProc.java:39)
+Caused by: java.lang.NoClassDefFoundError: org/apache/commons/io/FileUtils
+	at com.test.Test.execute(Test.java:39)
+	... 6 more
+Caused by: java.lang.ClassNotFoundException: org.apache.commons.io.FileUtils
+	at java.net.URLClassLoader$1.run(Unknown Source)
+	at java.net.URLClassLoader$1.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(Unknown Source)
+	at java.lang.ClassLoader.loadClass(Unknown Source)
+	at java.lang.ClassLoader.loadClass(Unknown Source)
+	... 7 more
+2017-06-14 17:04:14,335 INFO [com.nt.open.proc.util.LogUtil] - runProc end....jobName=discrontest1
+2017-06-14 17:12:53,351 INFO [com.nt.open.proc.util.LogUtil] - runProc start....jobName=discrontest1
+2017-06-14 17:12:53,381 INFO [com.nt.open.proc.util.LogUtil] - runResult=null
+2017-06-14 17:12:53,382 INFO [com.nt.open.proc.util.LogUtil] - runProc end....jobName=discrontest1
+2017-06-14 17:33:38,919 INFO [com.nt.open.proc.util.LogUtil] - runProc start....jobName=null
+2017-06-14 17:33:40,813 INFO [com.nt.open.proc.util.LogUtil] - ä»»åŠ¡è¶…æ—¶,exit proc timeout=2000
+2017-06-14 17:34:00,751 INFO [com.nt.open.proc.util.LogUtil] - runProc start....jobName=null
+2017-06-14 17:34:02,645 INFO [com.nt.open.proc.util.LogUtil] - ä»»åŠ¡è¶…æ—¶,exit proc timeout=2000
+2017-06-14 17:39:14,170 INFO [com.nt.open.proc.util.LogUtil] - runProc start....jobName=null
+2017-06-14 17:39:14,196 INFO [com.nt.open.proc.util.LogUtil] - runResult=null
+2017-06-14 17:39:14,196 INFO [com.nt.open.proc.util.LogUtil] - runProc end....jobName=null
+2017-06-14 17:39:16,065 INFO [com.nt.open.proc.util.LogUtil] - ä»»åŠ¡è¶…æ—¶,exit proc timeout=2000
+2017-06-14 18:16:25,477 INFO [com.nt.open.proc.util.LogUtil] - runProc start....jobName=null
+2017-06-14 18:16:25,496 INFO [com.nt.open.proc.util.LogUtil] - runResult=null
+2017-06-14 18:16:25,496 INFO [com.nt.open.proc.util.LogUtil] - runProc end....jobName=null
+2017-06-14 18:19:49,027 INFO [com.nt.open.proc.util.LogUtil] - runProc start....jobName=null
+2017-06-14 18:19:49,057 INFO [com.nt.open.proc.util.LogUtil] - runResult=null
+2017-06-14 18:19:49,057 INFO [com.nt.open.proc.util.LogUtil] - runProc end....jobName=null
+2017-06-14 18:20:05,471 INFO [com.nt.open.proc.util.LogUtil] - runProc start....jobName=null
+2017-06-14 18:20:05,489 INFO [com.nt.open.proc.util.LogUtil] - runResult=null
+2017-06-14 18:20:05,489 INFO [com.nt.open.proc.util.LogUtil] - runProc end....jobName=null
+2017-06-14 18:22:09,493 INFO [com.nt.open.proc.util.LogUtil] - runProc start....jobName=null
+2017-06-14 18:22:09,515 INFO [com.nt.open.proc.util.LogUtil] - runResult=null
+2017-06-14 18:22:09,515 INFO [com.nt.open.proc.util.LogUtil] - runProc end....jobName=null
+2017-06-14 18:22:16,793 INFO [com.nt.open.proc.util.LogUtil] - runProc start....jobName=null
+2017-06-14 18:22:16,901 INFO [com.nt.open.proc.util.LogUtil] - runResult=null
+2017-06-14 18:22:16,901 INFO [com.nt.open.proc.util.LogUtil] - runProc end....jobName=null
+2017-06-14 19:33:16,127 INFO [com.nt.open.proc.util.LogUtil] - runProc start....jobName=null
+2017-06-14 19:33:16,158 INFO [com.nt.open.proc.util.LogUtil] - runResult=null
+2017-06-14 19:33:16,158 INFO [com.nt.open.proc.util.LogUtil] - runProc end....jobName=null
+2017-06-14 19:37:24,480 INFO [com.nt.open.proc.util.LogUtil] - runProc start....jobName=null
+2017-06-14 19:37:24,509 INFO [com.nt.open.proc.util.LogUtil] - runResult=null
+2017-06-14 19:37:24,509 INFO [com.nt.open.proc.util.LogUtil] - runProc end....jobName=null

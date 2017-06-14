@@ -3,9 +3,7 @@
  */
 package com.nt.open.proc.main;
 
-import com.nt.open.proc.entity.emun.JobEnum;
 import com.nt.open.proc.util.AppContext;
-import com.nt.open.proc.util.HTTPUtils;
 import com.nt.open.proc.util.LogUtil;
 
 /**
@@ -13,6 +11,8 @@ import com.nt.open.proc.util.LogUtil;
  *
  */
 public class RunProc {
+	
+	private final static long CHECK_INTERVEL=200L;
 	
 
 	public static void main(String[] args) {
@@ -24,16 +24,31 @@ public class RunProc {
 			String timeout=args[4];
 			String nettyPort=args[5];
 			
+//			String jobName="discrontest1";
+//			String rootPath="D:/workspace/open_source/dis-cron/dis-cron-main/target";
+//			String url="com.test.Test";
+//			String typeStr="2";
+//			String timeout="2000";
+//			String nettyPort="8192";
+			
 			AppContext.APPCONTEXT.setJobName(jobName);
 			AppContext.APPCONTEXT.setNettyPort(Integer.parseInt(nettyPort));
 			AppContext.APPCONTEXT.setRootPath(rootPath);
 			
-			LogUtil.info("runProc start....jobName="+args[0]);
+			long time=0L;
 			
+			Thread exeThread=new Thread(new ExeThread(jobName,Integer.parseInt(typeStr), url, rootPath));
+			exeThread.start();
+//			new ExeThread(jobName,Integer.parseInt(typeStr), url, rootPath).run();
+			while(!AppContext.APPCONTEXT.isOver()){
+				if(time>=Long.parseLong(timeout)){
+					LogUtil.info("任务超时,exit proc timeout="+time);
+					System.exit(0);
+				}
+				Thread.sleep(CHECK_INTERVEL);
+				time+=CHECK_INTERVEL;
+			}
 			
-			
-			
-			LogUtil.info("runProc end....jobName="+args[0]);
 		}catch(Exception e){
 			e.printStackTrace();
 		}

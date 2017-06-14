@@ -16,6 +16,8 @@ public enum AppContext {
 	private String rootPath="";
 	
 	private String jobName="";
+	
+	private boolean isOver=false;
 
 	public int getNettyPort() {
 		return nettyPort;
@@ -38,6 +40,14 @@ public enum AppContext {
 
 	public void setJobName(String jobName) {
 		this.jobName = jobName;
+	}
+
+	public boolean isOver() {
+		return isOver;
+	}
+
+	public void setOver(boolean isOver) {
+		this.isOver = isOver;
 	}
 	
 	

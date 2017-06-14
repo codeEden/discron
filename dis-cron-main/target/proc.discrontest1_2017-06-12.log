@@ -1,8 +1,0 @@
-2017-06-12 20:10:30,758 INFO [com.nt.open.proc.util.LogUtil] - runProc  start.....
-2017-06-12 20:10:30,759 INFO [com.nt.open.proc.util.LogUtil] - arg===discrontest1
-2017-06-12 20:10:30,759 INFO [com.nt.open.proc.util.LogUtil] - arg===D:\workspace\open_source\dis-cron\dis-cron-main\target
-2017-06-12 20:10:30,759 INFO [com.nt.open.proc.util.LogUtil] - arg===settttt
-2017-06-12 20:10:30,759 INFO [com.nt.open.proc.util.LogUtil] - arg===1
-2017-06-12 20:10:30,759 INFO [com.nt.open.proc.util.LogUtil] - arg===100
-2017-06-12 20:10:30,759 INFO [com.nt.open.proc.util.LogUtil] - arg===8798
-2017-06-12 20:10:30,760 INFO [com.nt.open.proc.util.LogUtil] - runProc  end.....
