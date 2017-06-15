@@ -9,9 +9,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.List;
+import java.util.Map;
 
+import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.nt.open.proc.entity.emun.JobEnum;
+import com.nt.open.proc.netty.NettyClient;
 import com.nt.open.proc.util.AppContext;
 import com.nt.open.proc.util.HTTPUtils;
 import com.nt.open.proc.util.LogUtil;
@@ -26,19 +30,22 @@ public class ExeThread implements Runnable{
 	private Integer type;
 	private String url;
 	private String jarPath;
+	private String id;
 	private URLClassLoader urlClassLoader;
 
 	
 
-	public ExeThread(String jobName,Integer type, String url, String jarPath) {
+	public ExeThread(String jobName,Integer type, String url, String jarPath,String id) {
 		super();
 		this.jobName=jobName;
 		this.type = type;
 		this.url = url;
 		this.jarPath = jarPath;
+		this.id=id;
 	}
 
 	public void run() {
+		long start=System.currentTimeMillis();
 		try{
 			LogUtil.info("runProc start....jobName="+jobName);
 			
@@ -56,6 +63,13 @@ public class ExeThread implements Runnable{
 		}catch(Exception e){
 			LogUtil.error("任务执行错误",e);
 		}finally{
+			Map<String,Object> map=Maps.newHashMap();
+			map.put("jobName", jobName);
+			map.put("id", id);
+			long end=System.currentTimeMillis();
+			long time=end-start;
+			map.put("runTime", time);
+			NettyClient.sendMessage(JSON.toJSONString(map));
 			AppContext.APPCONTEXT.setOver(true);
 		}
 	}

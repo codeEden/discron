@@ -54,7 +54,4 @@ public class NettyClient {
 		f.getChannel().write(message);
 	}
 	
-	public static void main(String[] args) {
-		sendMessage("client test11111");
-	}
 }

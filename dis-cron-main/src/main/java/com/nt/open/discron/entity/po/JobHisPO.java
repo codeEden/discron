@@ -16,7 +16,8 @@ import lombok.Setter;
 public class JobHisPO {
 
 	private Long id;
-	private Long jobName;
+	private Long jobId;
+	private String jobName;
 	private String cron;
 	/**
 	 * 超时时间  秒
@@ -25,7 +26,7 @@ public class JobHisPO {
 	/**
 	 * type(1.http 2.class)
 	 */
-	private String type;
+	private Integer type;
 	/**
 	 * http或者类地址
 	 */
@@ -37,6 +38,23 @@ public class JobHisPO {
 	/**
 	 * 执行时常 （s秒）
 	 */
-	private int executeTimes;
+	private Long executeTimes;
+	/**
+	 * 执行job机器
+	 */
+	private String handleHost;
+	
+	private Date createTime;
+	
+	public JobHisPO(JobPO jobPO){
+		this.jobId=jobPO.getId();
+		this.jobName=jobPO.getJobName();
+		this.cron=jobPO.getCron();
+		this.timeout=jobPO.getTimeout();
+		this.type=jobPO.getType();
+		this.url=jobPO.getUrl();
+		this.lastExeTime=jobPO.getLastExeTime();
+		this.handleHost=jobPO.getHandleHost();
+	}
 	
 }

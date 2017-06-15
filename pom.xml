@@ -27,6 +27,9 @@
 		<quartz.version>2.3.0</quartz.version>
 		<commons-collections.version>3.2.2</commons-collections.version>
 		<netty.version>3.10.6.Final</netty.version>
+		
+		<httpclient.version>4.3.3</httpclient.version>
+		<fastjson.version>1.2.33</fastjson.version>
 	</properties>
 
 	<dependencies>
@@ -91,8 +94,14 @@
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient-cache</artifactId>
-			<version>4.3.3</version>
+			<version>${httpclient.version}</version>
 		</dependency>
+		<dependency>
+		    <groupId>com.alibaba</groupId>
+		    <artifactId>fastjson</artifactId>
+		    <version>${fastjson.version}</version>
+		</dependency>
+		
 	</dependencies>
 	
 	<build>

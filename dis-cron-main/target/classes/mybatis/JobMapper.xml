@@ -17,6 +17,11 @@
 		( #{jobName},#{cron},#{timeout},#{type},#{url},#{lastExeTime},#{nextExeTime},#{status},#{updateTime},#{createTime},#{category},#{handleHost});
 	</insert>
 	
+	<select id="get" resultType="job">
+		select <include refid="Base_Column_List" /> from Job where
+		 id=#{id}
+	</select>
+	
 	<select id="getList" parameterType="job" resultType="job">
 		select <include refid="Base_Column_List" /> from Job where
 		1=1 

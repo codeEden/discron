@@ -3,6 +3,9 @@
  */
 package com.nt.open.proc.main;
 
+import java.util.Map;
+
+import com.alibaba.fastjson.JSON;
 import com.nt.open.proc.util.AppContext;
 import com.nt.open.proc.util.LogUtil;
 
@@ -17,12 +20,22 @@ public class RunProc {
 
 	public static void main(String[] args) {
 		try{
-			String jobName=args[0];
-			String rootPath=args[1];
-			String url=args[2];
-			String typeStr=args[3];
-			String timeout=args[4];
-			String nettyPort=args[5];
+			String param=args[0];
+			Map<String,Object> paramMap=JSON.parseObject(param);
+			String jobName=(String) paramMap.get("jobName");
+			String nettyPort=(String) paramMap.get("nettyPort");
+			String rootPath=(String) paramMap.get("rootPath");
+			String typeStr=(String) paramMap.get("typeStr");
+			String url=(String) paramMap.get("url");
+			String id=(String) paramMap.get("id");
+			String timeout=(String) paramMap.get("timeout");
+			
+//			paramMap.put("jobName", jobName);
+//			paramMap.put("rootPath", rootPath);
+//			paramMap.put("url", url);
+//			paramMap.put("type", type);
+//			paramMap.put("id", id);
+//			paramMap.put("port", port);
 			
 //			String jobName="discrontest1";
 //			String rootPath="D:/workspace/open_source/dis-cron/dis-cron-main/target";
@@ -37,7 +50,7 @@ public class RunProc {
 			
 			long time=0L;
 			
-			Thread exeThread=new Thread(new ExeThread(jobName,Integer.parseInt(typeStr), url, rootPath));
+			Thread exeThread=new Thread(new ExeThread(jobName,Integer.parseInt(typeStr), url, rootPath,id));
 			exeThread.start();
 //			new ExeThread(jobName,Integer.parseInt(typeStr), url, rootPath).run();
 			while(!AppContext.APPCONTEXT.isOver()){

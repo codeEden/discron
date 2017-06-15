@@ -4,8 +4,10 @@
 package com.nt.open.discron.quartz;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URISyntaxException;
+import java.text.ParseException;
+import java.util.Date;
+import java.util.Map;
 
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -13,7 +15,10 @@ import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Maps;
 import com.nt.open.discron.util.AppContext;
+import com.nt.open.discron.util.DateUtil;
 
 /**
  * @author bjfulianqiu
@@ -27,8 +32,8 @@ public class CustomJob implements Job {
 	 * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
 	 */
 	public void execute(JobExecutionContext context) throws JobExecutionException {
-		// TODO Auto-generated method stub
 		Integer type=context.getJobDetail().getJobDataMap().getInt("type");
+		Long id=context.getJobDetail().getJobDataMap().getLong("id");
 		String url=context.getJobDetail().getJobDataMap().getString("url");
 		Integer timeout=context.getJobDetail().getJobDataMap().getInt("timeout");
 		String jobName=context.getJobDetail().getJobDataMap().getString("jobName");
@@ -39,22 +44,20 @@ public class CustomJob implements Job {
 		} catch (URISyntaxException e1) {
 			e1.printStackTrace();
 		}
-	    String jarpathString = rootPath + "/dis-cron-proc.jar";
-        String cmd = String.format("java -jar %s %s %s %s %d %d %d",
-            jarpathString,
-            jobName,
-            rootPath,
-            url,
-            type,
-            timeout,
-            AppContext.APPCONTEXT.NETTY_SERVER_PORT
-        );
-        logger.info("cmd={}",cmd);
         try {
+        	Date now=new Date();
+        	String jarpathString = rootPath + "/dis-cron-proc.jar";
+        	String paramStr=this.getParamStr(jobName, rootPath, url, type, timeout, id,  AppContext.APPCONTEXT.NETTY_SERVER_PORT,now);
+        	String cmd = String.format("java -jar %s %s",
+        			jarpathString,
+        			paramStr
+        			);
+        	logger.info("cmd={}",cmd);
+        	//TODO: 记录启动时间
 			Process process = Runtime.getRuntime().exec(cmd);
 			AppContext.APPCONTEXT.addJobProcMap(jobName,process);
 			logger.info("子进程启动成功！");
-		} catch (IOException e) {
+		} catch (Exception e) {
 			logger.error("启动进程错误", e);
 		}
         
@@ -67,6 +70,20 @@ public class CustomJob implements Job {
 			logger.info("job执行,key={},执行方式={},url={}",context.getJobDetail().getKey().getName(),JobEnum.Type.CLASS.getMessage(),url);
 		}*/
 		
+	}
+	
+	private String getParamStr(String jobName, String rootPath, String url, Integer type, Integer timeout, Long id,
+			Integer port,Date now) throws ParseException {
+		Map<String,Object> paramMap=Maps.newHashMap();
+		paramMap.put("jobName", jobName);
+		paramMap.put("rootPath", rootPath);
+		paramMap.put("url", url);
+		paramMap.put("type", type);
+		paramMap.put("id", id);
+		paramMap.put("port", port);
+		paramMap.put("startTime", DateUtil.date2String(now));
+		
+		return JSON.toJSONString(paramMap);
 	}
 
 }

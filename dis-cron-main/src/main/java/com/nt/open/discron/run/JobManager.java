@@ -68,12 +68,7 @@ public class JobManager {
 		JobPO jobPO=new JobPO();
 		jobPO.setHandleHost(HostHelper.getHostName());
 		//争抢任务
-		int count=jobDao.registerHandleHost(jobPO);
-//		if(count>0){
-//			logger.info("争抢任务成功，个数 count= {}",count);
-//		}else{
-//			logger.info("争抢任务失败 ");
-//		}
+		jobDao.registerHandleHost(jobPO);
 		//查询主机对应的job
 		jobPO.setStatus(JobEnum.Status.NORMAL.getCode());
 		jobList=jobDao.getList(jobPO);
