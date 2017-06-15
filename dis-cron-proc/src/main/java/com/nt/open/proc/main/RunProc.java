@@ -29,6 +29,7 @@ public class RunProc {
 			String url=(String) paramMap.get("url");
 			String id=(String) paramMap.get("id");
 			String timeout=(String) paramMap.get("timeout");
+			String startTime=(String) paramMap.get("startTime");
 			
 //			paramMap.put("jobName", jobName);
 //			paramMap.put("rootPath", rootPath);
@@ -50,7 +51,7 @@ public class RunProc {
 			
 			long time=0L;
 			
-			Thread exeThread=new Thread(new ExeThread(jobName,Integer.parseInt(typeStr), url, rootPath,id));
+			Thread exeThread=new Thread(new ExeThread(jobName,Integer.parseInt(typeStr), url, rootPath,id,startTime));
 			exeThread.start();
 //			new ExeThread(jobName,Integer.parseInt(typeStr), url, rootPath).run();
 			while(!AppContext.APPCONTEXT.isOver()){

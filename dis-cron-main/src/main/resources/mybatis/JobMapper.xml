@@ -22,6 +22,10 @@
 		 id=#{id}
 	</select>
 	
+	<update id="update">
+		update Job set lastExeTime=#{lastExeTime},updateTime=#{updateTime} where id=#{id}
+	</update>
+	
 	<select id="getList" parameterType="job" resultType="job">
 		select <include refid="Base_Column_List" /> from Job where
 		1=1 

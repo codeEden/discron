@@ -17,6 +17,8 @@ import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
+import com.nt.open.discron.dao.JobDao;
+import com.nt.open.discron.mybatis.ProxyUtil;
 import com.nt.open.discron.util.AppContext;
 import com.nt.open.discron.util.DateUtil;
 
@@ -53,7 +55,10 @@ public class CustomJob implements Job {
         			paramStr
         			);
         	logger.info("cmd={}",cmd);
-        	//TODO: 记录启动时间
+        	// 记录启动时间
+        	JobDao jobDao=(JobDao) ProxyUtil.getProxy(JobDao.class);
+        	jobDao.update(id, now, now);
+        	
 			Process process = Runtime.getRuntime().exec(cmd);
 			AppContext.APPCONTEXT.addJobProcMap(jobName,process);
 			logger.info("子进程启动成功！");

@@ -3,6 +3,7 @@
  */
 package com.nt.open.discron.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -22,4 +23,6 @@ public interface JobDao {
 	public List<JobPO> getList(JobPO jobPO);
 	
 	public int registerHandleHost(JobPO jobPO);
+	
+	public int update(@Param("id") Long id,@Param("lastExeTime") Date lastExeTime,@Param("updateTime") Date updateTime);
 }

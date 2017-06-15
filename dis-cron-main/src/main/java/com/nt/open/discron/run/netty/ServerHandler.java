@@ -63,9 +63,7 @@ public class ServerHandler extends SimpleChannelHandler {
 				jobHisPO.setCreateTime(new Date());
 				//写入历史记录
 				JobHisDao jobHisDao=(JobHisDao) ProxyUtil.getProxy(JobHisDao.class);
-				jobHisDao.insert(jobHisDao);
-				
-				//TODO 写入历史记录
+				jobHisDao.insert(jobHisPO);
 				
 			}
 		}

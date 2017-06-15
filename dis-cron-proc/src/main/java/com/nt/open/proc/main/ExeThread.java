@@ -31,21 +31,24 @@ public class ExeThread implements Runnable{
 	private String url;
 	private String jarPath;
 	private String id;
+	private String startTime;
 	private URLClassLoader urlClassLoader;
 
 	
 
-	public ExeThread(String jobName,Integer type, String url, String jarPath,String id) {
+	public ExeThread(String jobName,Integer type, String url, String jarPath,String id,String startTime) {
 		super();
 		this.jobName=jobName;
 		this.type = type;
 		this.url = url;
 		this.jarPath = jarPath;
 		this.id=id;
+		this.startTime=startTime;
 	}
 
 	public void run() {
 		long start=System.currentTimeMillis();
+		String errorMsg=null;
 		try{
 			LogUtil.info("runProc start....jobName="+jobName);
 			
@@ -66,6 +69,7 @@ public class ExeThread implements Runnable{
 			Map<String,Object> map=Maps.newHashMap();
 			map.put("jobName", jobName);
 			map.put("id", id);
+			map.put("startTime", startTime);
 			long end=System.currentTimeMillis();
 			long time=end-start;
 			map.put("runTime", time);
