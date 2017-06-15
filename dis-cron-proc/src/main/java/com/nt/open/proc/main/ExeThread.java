@@ -48,7 +48,7 @@ public class ExeThread implements Runnable{
 
 	public void run() {
 		long start=System.currentTimeMillis();
-		String errorMsg=null;
+		String errorMsg="";
 		try{
 			LogUtil.info("runProc start....jobName="+jobName);
 			
@@ -64,6 +64,7 @@ public class ExeThread implements Runnable{
 			}
 			LogUtil.info("runProc end....jobName="+jobName);
 		}catch(Exception e){
+			errorMsg=getStatcTrace(e);
 			LogUtil.error("任务执行错误",e);
 		}finally{
 			Map<String,Object> map=Maps.newHashMap();
@@ -73,9 +74,18 @@ public class ExeThread implements Runnable{
 			long end=System.currentTimeMillis();
 			long time=end-start;
 			map.put("runTime", time);
+			map.put("errorMsg", errorMsg);
 			NettyClient.sendMessage(JSON.toJSONString(map));
 			AppContext.APPCONTEXT.setOver(true);
 		}
+	}
+	
+	private String getStatcTrace(Exception e){
+		StringBuilder sb=new StringBuilder("");
+		for(StackTraceElement element:e.getStackTrace()){
+			sb.append(element.toString());
+		}
+		return sb.toString();
 	}
 	
 	private URL[] getUrls(String jarpath) throws MalformedURLException{

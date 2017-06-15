@@ -54,6 +54,7 @@ public class ServerHandler extends SimpleChannelHandler {
 			if(!Strings.isNullOrEmpty(message)){
 				Map<String, Object> msgMap=JSON.parseObject(message);
 				String id=(String) msgMap.get("id");
+				String errorMsg=(String) msgMap.get("errorMsg");
 				long runTime=Long.parseLong((String) msgMap.get("runTime"));
 				//获得代理类
 				JobDao jobDao=(JobDao) ProxyUtil.getProxy(JobDao.class);
@@ -61,6 +62,7 @@ public class ServerHandler extends SimpleChannelHandler {
 				JobHisPO jobHisPO=new JobHisPO(job);
 				jobHisPO.setExecuteTimes(runTime);
 				jobHisPO.setCreateTime(new Date());
+				jobHisPO.setErrorMsg(errorMsg);
 				//写入历史记录
 				JobHisDao jobHisDao=(JobHisDao) ProxyUtil.getProxy(JobHisDao.class);
 				jobHisDao.insert(jobHisPO);

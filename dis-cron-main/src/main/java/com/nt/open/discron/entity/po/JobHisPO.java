@@ -44,6 +44,8 @@ public class JobHisPO {
 	 */
 	private String handleHost;
 	
+	private String errorMsg;
+	
 	private Date createTime;
 	
 	public JobHisPO(JobPO jobPO){
