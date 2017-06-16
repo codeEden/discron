@@ -16,6 +16,7 @@ import com.alibaba.fastjson.JSON;
 import com.google.common.base.Strings;
 import com.nt.open.discron.dao.JobDao;
 import com.nt.open.discron.dao.JobHisDao;
+import com.nt.open.discron.entity.dto.Message;
 import com.nt.open.discron.entity.po.JobHisPO;
 import com.nt.open.discron.entity.po.JobPO;
 import com.nt.open.discron.mybatis.ProxyUtil;
@@ -67,6 +68,11 @@ public class ServerHandler extends SimpleChannelHandler {
 				JobHisDao jobHisDao=(JobHisDao) ProxyUtil.getProxy(JobHisDao.class);
 				jobHisDao.insert(jobHisPO);
 				
+				
+				Message retMessage=new Message();
+				retMessage.setCode(200);
+				retMessage.setMessage("success");
+				e.getChannel().write(JSON.toJSONString(retMessage));
 			}
 		}
 		

@@ -11,6 +11,9 @@ import org.jboss.netty.channel.SimpleChannelHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.alibaba.fastjson.JSON;
+import com.nt.open.proc.entity.dto.Message;
+import com.nt.open.proc.util.AppContext;
 import com.nt.open.proc.util.LogUtil;
 
 /**
@@ -63,7 +66,14 @@ public class ClientHandler extends SimpleChannelHandler {
 	@Override  
     public void messageReceived(ChannelHandlerContext ctx, MessageEvent e)  
             throws Exception {
-		logger.info("client receive message"+e.getMessage().toString());
-//		e.getChannel().write("client 1");
+		Object msgObj=e.getMessage();
+		if(msgObj!=null){
+			logger.info("client receive message"+msgObj.toString());
+			Message message=(Message) JSON.parseArray(String.valueOf(msgObj), Message.class);
+			if(message.getCode()==200){
+				AppContext.APPCONTEXT.setOver(true);
+			}
+		}
+		
     }
 }

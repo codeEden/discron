@@ -26,7 +26,9 @@ CREATE TABLE `JobHis` (
   `type` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'type(1.http 2.class)',
   `url` varchar(500) NOT NULL DEFAULT '' COMMENT 'http或者类地址',
   `lastExeTime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '最后执行时间',
+  `handleHost` varchar(100) NOT NULL,
   `executeTimes` bigint(20) NOT NULL DEFAULT '0' COMMENT '执行时常 （ms秒）',
+  `errorMsg` varchar(4000) NOT NULL,
   `createTime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
