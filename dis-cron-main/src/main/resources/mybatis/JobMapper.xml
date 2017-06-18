@@ -27,7 +27,7 @@
 	</update>
 	
 	<select id="getList" parameterType="job" resultType="job">
-		select <include refid="Base_Column_List" /> from Job where
+		select id,<include refid="Base_Column_List" /> from Job where
 		1=1 
 		<if test="id != null">
 		  and id=#{id}

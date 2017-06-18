@@ -4,10 +4,13 @@
 package com.nt.open.discron.quartz;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -15,7 +18,6 @@ import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 import com.nt.open.discron.dao.JobDao;
 import com.nt.open.discron.mybatis.ProxyUtil;
@@ -49,7 +51,17 @@ public class CustomJob implements Job {
         try {
         	Date now=new Date();
         	String jarpathString = rootPath + "/dis-cron-proc.jar";
-        	String paramStr=this.getParamStr(jobName, rootPath, url, type, timeout, id,  AppContext.APPCONTEXT.NETTY_SERVER_PORT,now);
+        	Map<String,Object> paramMap=Maps.newHashMap();
+        	paramMap.put("jobName", jobName);
+        	paramMap.put("rootPath", rootPath);
+        	paramMap.put("url", url);
+        	paramMap.put("type", type);
+        	paramMap.put("timeout", timeout);
+        	paramMap.put("id", id);
+        	paramMap.put("nettyPort", AppContext.APPCONTEXT.NETTY_SERVER_PORT);
+        	paramMap.put("startTime", DateUtil.date2String(now));
+        	
+        	String paramStr=this.getParamStr(paramMap);
         	String cmd = String.format("java -jar %s %s",
         			jarpathString,
         			paramStr
@@ -77,18 +89,17 @@ public class CustomJob implements Job {
 		
 	}
 	
-	private String getParamStr(String jobName, String rootPath, String url, Integer type, Integer timeout, Long id,
-			Integer port,Date now) throws ParseException {
-		Map<String,Object> paramMap=Maps.newHashMap();
-		paramMap.put("jobName", jobName);
-		paramMap.put("rootPath", rootPath);
-		paramMap.put("url", url);
-		paramMap.put("type", type);
-		paramMap.put("id", id);
-		paramMap.put("port", port);
-		paramMap.put("startTime", DateUtil.date2String(now));
-		
-		return JSON.toJSONString(paramMap);
+	private String getParamStr(Map<String,Object> paramMap) throws ParseException, UnsupportedEncodingException {
+		StringBuilder result=new StringBuilder("");
+		for(Entry<String, Object> entry:paramMap.entrySet()){
+			if(!result.toString().equals("")){
+				result.append("&");
+			}
+			result.append(entry.getKey());
+			result.append("=");
+			result.append(String.valueOf(entry.getValue()));
+		}
+		return URLEncoder.encode(result.toString(),"UTF-8");
 	}
 
 }

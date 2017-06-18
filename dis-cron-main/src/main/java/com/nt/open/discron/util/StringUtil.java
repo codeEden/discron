@@ -12,6 +12,6 @@ import com.google.common.base.Joiner;
 public class StringUtil {
 
 	public static String joinStr(String... args){
-		return Joiner.on("").join(args);
+		return Joiner.on("").useForNull("null").join(args);
 	}
 }
