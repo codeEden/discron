@@ -6,7 +6,10 @@ package com.nt.open.discron.run.netty;
 import java.util.Date;
 import java.util.Map;
 
+import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
+import org.jboss.netty.channel.ChannelStateEvent;
+import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
 import org.slf4j.Logger;
@@ -56,7 +59,7 @@ public class ServerHandler extends SimpleChannelHandler {
 				Map<String, Object> msgMap=JSON.parseObject(message);
 				String id=(String) msgMap.get("id");
 				String errorMsg=(String) msgMap.get("errorMsg");
-				long runTime=Long.parseLong((String) msgMap.get("runTime"));
+				long runTime=Long.parseLong(String.valueOf(msgMap.get("runTime")));
 				//获得代理类
 				JobDao jobDao=(JobDao) ProxyUtil.getProxy(JobDao.class);
 				JobPO job=jobDao.get(Long.parseLong(id));
@@ -64,6 +67,7 @@ public class ServerHandler extends SimpleChannelHandler {
 				jobHisPO.setExecuteTimes(runTime);
 				jobHisPO.setCreateTime(new Date());
 				jobHisPO.setErrorMsg(errorMsg);
+				jobHisPO.setJobId(Long.parseLong(id));
 				//写入历史记录
 				JobHisDao jobHisDao=(JobHisDao) ProxyUtil.getProxy(JobHisDao.class);
 				jobHisDao.insert(jobHisPO);
@@ -72,9 +76,24 @@ public class ServerHandler extends SimpleChannelHandler {
 				Message retMessage=new Message();
 				retMessage.setCode(200);
 				retMessage.setMessage("success");
-				e.getChannel().write(JSON.toJSONString(retMessage));
+				logger.info("回写client");
+				ctx.getChannel().write(JSON.toJSONString(retMessage));
 			}
 		}
 		
     }
+	
+	@Override
+	public void channelClosed(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
+		super.channelClosed(ctx, e);
+		logger.info("channel 关闭");
+	}
+	
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) throws Exception {
+		super.exceptionCaught(ctx, e);
+		Channel channel = e.getChannel();  
+        channel.close();  
+        logger.info("一个客户端退出："+channel.getId());  
+	}
 }

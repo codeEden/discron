@@ -16,7 +16,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.nt.open.proc.entity.emun.JobEnum;
 import com.nt.open.proc.netty.NettyClient;
-import com.nt.open.proc.util.AppContext;
 import com.nt.open.proc.util.HTTPUtils;
 import com.nt.open.proc.util.LogUtil;
 
@@ -64,7 +63,7 @@ public class ExeThread implements Runnable{
 			}
 			LogUtil.info("runProc end....jobName="+jobName);
 		}catch(Exception e){
-			errorMsg=getStatcTrace(e);
+			errorMsg=getStatcTrace(e.getMessage(),e);
 			LogUtil.error("任务执行错误",e);
 		}finally{
 			Map<String,Object> map=Maps.newHashMap();
@@ -76,12 +75,11 @@ public class ExeThread implements Runnable{
 			map.put("runTime", time);
 			map.put("errorMsg", errorMsg);
 			NettyClient.sendMessage(JSON.toJSONString(map));
-			AppContext.APPCONTEXT.setOver(true);
 		}
 	}
 	
-	private String getStatcTrace(Exception e){
-		StringBuilder sb=new StringBuilder("");
+	private String getStatcTrace(String message,Exception e){
+		StringBuilder sb=new StringBuilder(message);
 		for(StackTraceElement element:e.getStackTrace()){
 			sb.append(element.toString());
 		}

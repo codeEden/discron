@@ -3,13 +3,11 @@
  */
 package com.nt.open.proc.netty;
 
-import org.jboss.netty.channel.ChannelFuture;
+import org.jboss.netty.buffer.BigEndianHeapChannelBuffer;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSON;
 import com.nt.open.proc.entity.dto.Message;
@@ -22,13 +20,9 @@ import com.nt.open.proc.util.LogUtil;
  */
 public class ClientHandler extends SimpleChannelHandler {
 	
-	private static Logger logger = LoggerFactory.getLogger("discron");
-	
-	private ChannelFuture future;
-	
 	private static ClientHandler serverHandler;
 	private ClientHandler(){}
-
+	
 	public static ClientHandler getServerHandler(){
 		if(serverHandler==null){
 			synchronized(ClientHandler.class){
@@ -49,13 +43,13 @@ public class ClientHandler extends SimpleChannelHandler {
 	  @Override
 	  public void channelClosed(
 	      ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
-	    System.out.println("client channel closed");
+		  LogUtil.info("client channel closed");
 	  }
 
 	  @Override
 	  public void channelDisconnected(
 	      ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
-	    System.out.println("client channel disconnect for peer");
+		  LogUtil.info("client channel disconnect for peer");
 	  }
 
 	  
@@ -63,13 +57,19 @@ public class ClientHandler extends SimpleChannelHandler {
 	 * 关键方法 
 	 * 用于接收从客户端发来的消息，进行相应的逻辑处理 
 	 */
-	@Override  
+	@Override
     public void messageReceived(ChannelHandlerContext ctx, MessageEvent e)  
             throws Exception {
 		Object msgObj=e.getMessage();
+		LogUtil.info("msgObj=="+msgObj);
 		if(msgObj!=null){
-			logger.info("client receive message"+msgObj.toString());
-			Message message=(Message) JSON.parseArray(String.valueOf(msgObj), Message.class);
+			BigEndianHeapChannelBuffer BigEndianHeapChannelBuffe=(BigEndianHeapChannelBuffer)msgObj;
+			byte[] req = new byte[BigEndianHeapChannelBuffe.readableBytes()];
+			BigEndianHeapChannelBuffe.readBytes(req);
+			String body = new String(req, "UTF-8");
+			
+			LogUtil.info("client receive message"+body);
+			Message message=(Message) JSON.parseObject(body, Message.class);
 			if(message.getCode()==200){
 				AppContext.APPCONTEXT.setOver(true);
 			}

@@ -5,7 +5,6 @@ package com.nt.open.proc.netty;
 
 import java.net.InetSocketAddress;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;

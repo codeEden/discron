@@ -35,30 +35,18 @@ public class RunProc {
 	
 
 	public static void main(String[] args) throws UnsupportedEncodingException {
-		AppContext.APPCONTEXT.setRootPath("F:\\opensource\\discron\\dis-cron-main\\target");
-		LogUtil.info("args[0]="+URLDecoder.decode(args[0].toString(), "UTF-8"));
-		
-		
 		try{
 			String param=URLDecoder.decode(args[0],"UTF-8");
-			LogUtil.info("param=="+param);
 			Map<String,Object> paramMap=parseParam(param);
-			LogUtil.info("paramMap="+paramMap);
 			String jobName=(String) paramMap.get("jobName");
 			String nettyPort=(String) paramMap.get("nettyPort");
 			String rootPath=(String) paramMap.get("rootPath");
 			String typeStr=(String) paramMap.get("type");
 			String url=(String) paramMap.get("url");
 			String id=(String) paramMap.get("id");
-			String timeout=(String) paramMap.get("timeout");
+//			String timeout=(String) paramMap.get("timeout");
 			String startTime=(String) paramMap.get("startTime");
 			
-//			paramMap.put("jobName", jobName);
-//			paramMap.put("rootPath", rootPath);
-//			paramMap.put("url", url);
-//			paramMap.put("type", type);
-//			paramMap.put("id", id);
-//			paramMap.put("port", port);
 			
 //			String jobName="discrontest1";
 //			String rootPath="D:/workspace/open_source/dis-cron/dis-cron-main/target";
@@ -73,18 +61,12 @@ public class RunProc {
 			
 			LogUtil.info("paramMap=="+paramMap.toString());
 			
-			long time=0L;
 			
-			Thread exeThread=new Thread(new ExeThread(jobName,Integer.parseInt(typeStr), url, rootPath,id,startTime));
-			exeThread.start();
-//			new ExeThread(jobName,Integer.parseInt(typeStr), url, rootPath).run();
+//			Thread exeThread=new Thread(new ExeThread(jobName,Integer.parseInt(typeStr), url, rootPath,id,startTime));
+//			exeThread.start();
+			new ExeThread(jobName,Integer.parseInt(typeStr), url, rootPath,id,startTime).run();
 			while(!AppContext.APPCONTEXT.isOver()){
-				if(time>=Long.parseLong(timeout)){
-					LogUtil.info("任务超时,exit proc timeout="+time);
-					System.exit(0);
-				}
 				Thread.sleep(CHECK_INTERVEL);
-				time+=CHECK_INTERVEL;
 			}
 			
 		}catch(Exception e){
