@@ -24,6 +24,8 @@ import com.nt.open.discron.util.HostHelper;
  */
 public class JobManager {
 	
+	private final long RUN_INTERVAL=1*1000L;
+	
 	public void run(){
 		while(true){
 			try {
@@ -44,12 +46,12 @@ public class JobManager {
 							jobDataMap.put("type", jobPO.getType());
 							jobDataMap.put("url", jobPO.getUrl());
 							jobDataMap.put("timeout", jobPO.getTimeout());
-							JobFactory.JOBFACTORY.addJob(jobName, jobName, cron,jobDataMap);
+							JobFactory.JOBFACTORY.addJob(String.valueOf(jobPO.getId()),String.valueOf(jobPO.getId()), cron,jobDataMap);
 						}
 					}
 				}
 				
-				Thread.sleep(1*1000);
+				Thread.sleep(RUN_INTERVAL);
 			} catch (InterruptedException e) {
 				LogUtil.error("jobManager错误", e);
 				e.printStackTrace();

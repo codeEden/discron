@@ -18,8 +18,18 @@
 	</insert>
 	
 	<select id="get" resultType="job">
-		select <include refid="Base_Column_List" /> from Job where
+		select id,<include refid="Base_Column_List" /> from Job where status=0 and 
 		 id=#{id}
+	</select>
+	
+	<select id="getListByIds" resultType="job">
+		select id,<include refid="Base_Column_List" /> from Job where status=0 and 
+		 and handleHost is not null and handleHost!='' 
+		 id in 
+		<foreach collection="ids" item="item" index="index"
+			open="(" close=")" separator=",">
+			#{item}
+		</foreach>
 	</select>
 	
 	<update id="update">

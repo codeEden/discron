@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.quartz.DisallowConcurrentExecution;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -28,6 +29,7 @@ import com.nt.open.discron.util.DateUtil;
  * @author bjfulianqiu
  *
  */
+@DisallowConcurrentExecution
 public class CustomJob implements Job {
 
 	/* (non-Javadoc)
@@ -46,31 +48,37 @@ public class CustomJob implements Job {
 		} catch (URISyntaxException e1) {
 			e1.printStackTrace();
 		}
-        try {
-        	Date now=new Date();
-        	String jarpathString = rootPath + "/dis-cron-proc.jar";
-        	Map<String,Object> paramMap=Maps.newHashMap();
-        	paramMap.put("jobName", jobName);
-        	paramMap.put("rootPath", rootPath);
-        	paramMap.put("url", url);
-        	paramMap.put("type", type);
-        	paramMap.put("timeout", timeout);
-        	paramMap.put("id", id);
-        	paramMap.put("nettyPort", AppContext.APPCONTEXT.NETTY_SERVER_PORT);
-        	paramMap.put("startTime", DateUtil.date2String(now));
-        	
-        	String paramStr=this.getParamStr(paramMap);
-        	String cmd = String.format("java -jar %s %s",
-        			jarpathString,
-        			paramStr
-        			);
-        	LogUtil.info("cmd={}",cmd);
-        	// 记录启动时间
-        	JobDao jobDao=(JobDao) ProxyUtil.getProxy(JobDao.class);
-        	jobDao.update(id, now, now);
-        	
-			Process process = Runtime.getRuntime().exec(cmd);
+		String cmd=null;
+		Date now=new Date();
+		//单独try catch 方式数据库出问题影响启动子进程
+		try{
+			String jarpathString = rootPath + "/dis-cron-proc.jar";
+			Map<String,Object> paramMap=Maps.newHashMap();
+			paramMap.put("jobName", jobName);
+			paramMap.put("rootPath", rootPath);
+			paramMap.put("url", url);
+			paramMap.put("type", type);
+			paramMap.put("timeout", timeout);
+			paramMap.put("id", id);
+			paramMap.put("nettyPort", AppContext.APPCONTEXT.NETTY_SERVER_PORT);
+			paramMap.put("startTime", DateUtil.date2String(now));
 			
+			String paramStr=this.getParamStr(paramMap);
+			cmd = String.format("java -jar %s %s",
+					jarpathString,
+					paramStr
+					);
+			LogUtil.info("cmd={}",cmd);
+			// 记录启动时间
+			JobDao jobDao=(JobDao) ProxyUtil.getProxy(JobDao.class);
+			jobDao.update(id, now, now);
+		}catch(Exception e){
+			LogUtil.error("启动子进程准备失败", e);
+		}
+		
+        try {
+        	//启动子进程
+			Process process = Runtime.getRuntime().exec(cmd);
 			
 			ProcInfo procInfo=new ProcInfo();
 			procInfo.setJobId(id);
@@ -78,13 +86,11 @@ public class CustomJob implements Job {
 			procInfo.setStartTime(now.getTime());
 			procInfo.setTimeout(timeout);
 			
-			AppContext.APPCONTEXT.addJobProcList(procInfo);
+			AppContext.APPCONTEXT.addJobProcMap(procInfo);
 			LogUtil.info("子进程启动成功！");
 		} catch (Exception e) {
 			LogUtil.error("启动进程错误", e);
 		}
-        
-        
 		
 	}
 	

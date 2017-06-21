@@ -24,5 +24,7 @@ public interface JobDao {
 	
 	public int registerHandleHost(JobPO jobPO);
 	
+	public List<JobPO> getListByIds(@Param("ids")List<Long> ids);
+	
 	public int update(@Param("id") Long id,@Param("lastExeTime") Date lastExeTime,@Param("updateTime") Date updateTime);
 }

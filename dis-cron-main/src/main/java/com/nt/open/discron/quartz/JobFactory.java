@@ -3,6 +3,7 @@
  */
 package com.nt.open.discron.quartz;
 
+import java.util.List;
 import java.util.Map;
 
 import org.quartz.CronScheduleBuilder;
@@ -10,6 +11,7 @@ import org.quartz.CronTrigger;
 import org.quartz.JobBuilder;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
+import org.quartz.JobExecutionContext;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
@@ -17,6 +19,7 @@ import org.quartz.SchedulerFactory;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
 
+import com.google.common.collect.Lists;
 import com.nt.open.discron.log.LogUtil;
 
 /**
@@ -74,6 +77,32 @@ public enum JobFactory {
 		} catch (SchedulerException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void deleteJob(String jobName){
+		JobKey jobKey = new JobKey(jobName);
+		try {
+			scheduler.deleteJob(jobKey);
+		} catch (SchedulerException e) {
+			e.printStackTrace();
+			LogUtil.error("scheduler删除job错误", e);
+		}
+	}
+	
+	public List<Long> getAllJobKey(){
+		List<Long> keyList=Lists.newArrayList();
+		try {
+			List<JobExecutionContext> jobList=scheduler.getCurrentlyExecutingJobs();
+			for(JobExecutionContext jobExecutionContext:jobList){
+				String jobName=jobExecutionContext.getJobDetail().getKey().getName();
+				keyList.add(Long.parseLong(jobName));
+			}
+		} catch (SchedulerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return keyList;
 	}
 
 }
