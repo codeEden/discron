@@ -44,7 +44,7 @@ public class RunProc {
 			String typeStr=(String) paramMap.get("type");
 			String url=(String) paramMap.get("url");
 			String id=(String) paramMap.get("id");
-//			String timeout=(String) paramMap.get("timeout");
+			String timeoutStr=(String) paramMap.get("timeout");
 			String startTime=(String) paramMap.get("startTime");
 			
 			
@@ -65,7 +65,21 @@ public class RunProc {
 //			Thread exeThread=new Thread(new ExeThread(jobName,Integer.parseInt(typeStr), url, rootPath,id,startTime));
 //			exeThread.start();
 			new ExeThread(jobName,Integer.parseInt(typeStr), url, rootPath,id,startTime).run();
+			
+			Long timeout=null;
+			if(!Strings.isNullOrEmpty(timeoutStr)){
+				timeout=Long.parseLong(timeoutStr);
+				//预留10s的buffer
+				timeout=timeout+10*1000;
+			}
 			while(!AppContext.APPCONTEXT.isOver()){
+				if(timeout!=null){
+					if(timeout.longValue()<0){
+						break;
+					}else{
+						timeout=timeout-CHECK_INTERVEL;
+					}
+				}
 				Thread.sleep(CHECK_INTERVEL);
 			}
 			

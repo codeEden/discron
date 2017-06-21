@@ -12,7 +12,6 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.quartz.DisallowConcurrentExecution;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -29,9 +28,7 @@ import com.nt.open.discron.util.DateUtil;
  * @author bjfulianqiu
  *
  */
-@DisallowConcurrentExecution
 public class CustomJob implements Job {
-	//StatefulJob
 
 	/* (non-Javadoc)
 	 * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
@@ -88,13 +85,6 @@ public class CustomJob implements Job {
 		}
         
         
-	    /*
-	    logger.info("rootPath={}",rootPath);
-		if(type==JobEnum.Type.HTTP.getCode()){
-			logger.info("job执行,key={},执行方式={},url={}",context.getJobDetail().getKey().getName(),JobEnum.Type.HTTP.getMessage(),url);
-		}else if(type==JobEnum.Type.CLASS.getCode()){
-			logger.info("job执行,key={},执行方式={},url={}",context.getJobDetail().getKey().getName(),JobEnum.Type.CLASS.getMessage(),url);
-		}*/
 		
 	}
 	

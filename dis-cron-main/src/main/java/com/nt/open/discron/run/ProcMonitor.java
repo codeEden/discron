@@ -4,6 +4,7 @@
 package com.nt.open.discron.run;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -36,13 +37,16 @@ public class ProcMonitor implements Runnable {
 			LogUtil.info("job进程监控,procList=={}", procList.size());
 			if(!CollectionUtils.isEmpty(procList)){
 				Date now=new Date();
-				for(ProcInfo procInfo:procList){
+				Iterator<ProcInfo> iterator=procList.iterator();
+				while(iterator.hasNext()){
+					ProcInfo procInfo=iterator.next();
 					Integer timeout=procInfo.getTimeout();
 					Long startTime=procInfo.getStartTime();
 					Long runTime=now.getTime()-startTime;
 					//如果当前时间-开始时间>超时时间(预留buffer)，则超时处理
 					if(runTime.longValue()>(timeout.intValue()+BUFFERTIME)){
 						timeOutHandler(procInfo, runTime,timeout);
+						iterator.remove();
 					}
 				}
 			}
