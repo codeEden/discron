@@ -10,16 +10,14 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import com.nt.open.discron.log.LogUtil;
 
 /**
  * @author bjfulianqiu
  *
  */
 public class SessionFactory {
-	
-	private static Logger logger = LoggerFactory.getLogger("discron");
 	
 	private static SqlSessionFactory sqlSessionFactory=null;
 	private final static String resource = "mybatis-config.xml";
@@ -29,9 +27,9 @@ public class SessionFactory {
 		try {
 			inputStream = Resources.getResourceAsStream(resource);
 			sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-			logger.info("mybatis session factory init success ...");
+			LogUtil.info("mybatis session factory init success ...");
 		} catch (IOException e) {
-			logger.error("sqlSessionFactory init error ", e);
+			LogUtil.error("sqlSessionFactory init error ", e);
 			e.printStackTrace();
 		}
 	}

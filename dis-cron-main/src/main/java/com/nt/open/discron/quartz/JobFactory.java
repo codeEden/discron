@@ -16,8 +16,8 @@ import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import com.nt.open.discron.log.LogUtil;
 
 /**
  * @author bjfulianqiu
@@ -43,12 +43,11 @@ public enum JobFactory {
 	}
 	
 	public boolean isExistJob(String jobName){
-		Logger logger = LoggerFactory.getLogger("discron");
 		JobKey jobKey=new JobKey(jobName);
 		try {
 			return scheduler.checkExists(jobKey);
 		} catch (SchedulerException e) {
-			logger.error("检查job是否存在错误", e);
+			LogUtil.error("检查job是否存在错误", e);
 			e.printStackTrace();
 		}
 		return true;
@@ -70,9 +69,8 @@ public enum JobFactory {
 
 			scheduler.scheduleJob(jobDetail, trigger);
 			scheduler.start();
-			Logger logger = LoggerFactory.getLogger("discron");
 			
-			logger.info("job添加到quartz成功，jobName={},cron={}",jobName,cron);
+			LogUtil.info("job添加到quartz成功，jobName={},cron={}",jobName,cron);
 		} catch (SchedulerException e) {
 			e.printStackTrace();
 		}

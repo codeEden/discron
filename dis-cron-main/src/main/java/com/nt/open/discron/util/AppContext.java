@@ -3,9 +3,10 @@
  */
 package com.nt.open.discron.util;
 
-import java.util.Map;
+import java.util.List;
 
-import com.google.common.collect.Maps;
+import com.google.common.collect.Lists;
+import com.nt.open.discron.entity.ProcInfo;
 
 /**
  * @author bjfulianqiu
@@ -15,12 +16,16 @@ public enum AppContext {
 	
 	APPCONTEXT;
 
-	private Map<String, Process> jobProcMap=Maps.newConcurrentMap();
+	private List<ProcInfo> jobProcList=Lists.newArrayList();
 	
 	public final int NETTY_SERVER_PORT=8798;
 	
 	
-	public void addJobProcMap(String jobName,Process process){
-		jobProcMap.put(jobName, process);
+	public void addJobProcList(ProcInfo process){
+		jobProcList.add(process);
+	}
+	
+	public List<ProcInfo> getJobProcList(){
+		return this.jobProcList;
 	}
 }

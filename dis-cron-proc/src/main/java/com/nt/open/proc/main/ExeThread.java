@@ -52,6 +52,7 @@ public class ExeThread implements Runnable{
 			LogUtil.info("runProc start....jobName="+jobName);
 			
 			if(type==JobEnum.Type.HTTP.getCode()){
+				Thread.sleep(30*1000);
 				HTTPUtils.sendHttpOrHttps(url, "GET", null, null);
 			}else if(type==JobEnum.Type.CLASS.getCode()){
 				urlClassLoader = new URLClassLoader(getUrls(jarPath), Thread.currentThread().getContextClassLoader());

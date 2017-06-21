@@ -12,8 +12,6 @@ import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Strings;
@@ -22,6 +20,7 @@ import com.nt.open.discron.dao.JobHisDao;
 import com.nt.open.discron.entity.dto.Message;
 import com.nt.open.discron.entity.po.JobHisPO;
 import com.nt.open.discron.entity.po.JobPO;
+import com.nt.open.discron.log.LogUtil;
 import com.nt.open.discron.mybatis.ProxyUtil;
 
 /**
@@ -29,8 +28,6 @@ import com.nt.open.discron.mybatis.ProxyUtil;
  *
  */
 public class ServerHandler extends SimpleChannelHandler {
-	
-	private static Logger logger = LoggerFactory.getLogger("discron");
 	
 	private static ServerHandler serverHandler;
 	private ServerHandler(){}
@@ -54,7 +51,7 @@ public class ServerHandler extends SimpleChannelHandler {
             throws Exception {
 		if(e.getMessage()!=null){
 			String message=(String) e.getMessage();
-			logger.info("server receive message"+message);
+			LogUtil.info("server receive message"+message);
 			if(!Strings.isNullOrEmpty(message)){
 				Map<String, Object> msgMap=JSON.parseObject(message);
 				String id=(String) msgMap.get("id");
@@ -76,7 +73,7 @@ public class ServerHandler extends SimpleChannelHandler {
 				Message retMessage=new Message();
 				retMessage.setCode(200);
 				retMessage.setMessage("success");
-				logger.info("回写client");
+				LogUtil.info("回写client");
 				ctx.getChannel().write(JSON.toJSONString(retMessage));
 			}
 		}
@@ -86,7 +83,7 @@ public class ServerHandler extends SimpleChannelHandler {
 	@Override
 	public void channelClosed(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
 		super.channelClosed(ctx, e);
-		logger.info("channel 关闭");
+		LogUtil.info("channel 关闭");
 	}
 	
 	@Override
@@ -94,6 +91,6 @@ public class ServerHandler extends SimpleChannelHandler {
 		super.exceptionCaught(ctx, e);
 		Channel channel = e.getChannel();  
         channel.close();  
-        logger.info("一个客户端退出："+channel.getId());  
+        LogUtil.info("一个客户端退出："+channel.getId());  
 	}
 }

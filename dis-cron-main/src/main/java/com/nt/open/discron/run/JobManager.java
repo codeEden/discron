@@ -8,13 +8,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Maps;
 import com.nt.open.discron.dao.JobDao;
 import com.nt.open.discron.entity.emun.JobEnum;
 import com.nt.open.discron.entity.po.JobPO;
+import com.nt.open.discron.log.LogUtil;
 import com.nt.open.discron.mybatis.ProxyUtil;
 import com.nt.open.discron.quartz.JobFactory;
 import com.nt.open.discron.util.HostHelper;
@@ -25,8 +24,6 @@ import com.nt.open.discron.util.HostHelper;
  */
 public class JobManager {
 	
-	private static Logger logger = LoggerFactory.getLogger("discron");
-
 	public void run(){
 		while(true){
 			try {
@@ -54,7 +51,7 @@ public class JobManager {
 				
 				Thread.sleep(1*1000);
 			} catch (InterruptedException e) {
-				logger.error("jobManager错误", e);
+				LogUtil.error("jobManager错误", e);
 				e.printStackTrace();
 			}
 		}

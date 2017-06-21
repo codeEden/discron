@@ -17,9 +17,8 @@ import org.jboss.netty.channel.Channels;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 import org.jboss.netty.handler.codec.string.StringDecoder;
 import org.jboss.netty.handler.codec.string.StringEncoder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import com.nt.open.discron.log.LogUtil;
 import com.nt.open.discron.util.AppContext;
 
 /**
@@ -28,8 +27,6 @@ import com.nt.open.discron.util.AppContext;
  */
 public class NettyServer {
 	
-	private static Logger logger = LoggerFactory.getLogger("discron");
-
 	private ServerBootstrap bootstrap;
 	private ServerHandler handler;
 
@@ -69,7 +66,7 @@ public class NettyServer {
 	 */
 	public void start() {
 		bootstrap.bind(new InetSocketAddress(AppContext.APPCONTEXT.NETTY_SERVER_PORT));
-		logger.info("服务器启动,端口:{}" , AppContext.APPCONTEXT.NETTY_SERVER_PORT);
+		LogUtil.info("服务器启动,端口:{}" , AppContext.APPCONTEXT.NETTY_SERVER_PORT);
 	}
 	
 	public static void main(String[] args) {

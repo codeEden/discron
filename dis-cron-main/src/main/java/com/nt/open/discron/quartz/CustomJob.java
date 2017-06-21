@@ -12,14 +12,15 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.quartz.DisallowConcurrentExecution;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Maps;
 import com.nt.open.discron.dao.JobDao;
+import com.nt.open.discron.entity.ProcInfo;
+import com.nt.open.discron.log.LogUtil;
 import com.nt.open.discron.mybatis.ProxyUtil;
 import com.nt.open.discron.util.AppContext;
 import com.nt.open.discron.util.DateUtil;
@@ -28,9 +29,9 @@ import com.nt.open.discron.util.DateUtil;
  * @author bjfulianqiu
  *
  */
+@DisallowConcurrentExecution
 public class CustomJob implements Job {
-	
-	private static Logger logger = LoggerFactory.getLogger("discron");
+	//StatefulJob
 
 	/* (non-Javadoc)
 	 * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
@@ -66,16 +67,24 @@ public class CustomJob implements Job {
         			jarpathString,
         			paramStr
         			);
-        	logger.info("cmd={}",cmd);
+        	LogUtil.info("cmd={}",cmd);
         	// 记录启动时间
         	JobDao jobDao=(JobDao) ProxyUtil.getProxy(JobDao.class);
         	jobDao.update(id, now, now);
         	
 			Process process = Runtime.getRuntime().exec(cmd);
-			AppContext.APPCONTEXT.addJobProcMap(jobName,process);
-			logger.info("子进程启动成功！");
+			
+			
+			ProcInfo procInfo=new ProcInfo();
+			procInfo.setJobId(id);
+			procInfo.setProcess(process);
+			procInfo.setStartTime(now.getTime());
+			procInfo.setTimeout(timeout);
+			
+			AppContext.APPCONTEXT.addJobProcList(procInfo);
+			LogUtil.info("子进程启动成功！");
 		} catch (Exception e) {
-			logger.error("启动进程错误", e);
+			LogUtil.error("启动进程错误", e);
 		}
         
         
