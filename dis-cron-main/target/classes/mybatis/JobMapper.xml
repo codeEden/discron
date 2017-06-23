@@ -62,4 +62,23 @@
 	</update>
 	
 	
+	<update id="resetJob">
+		UPDATE Job
+		SET handleHost = ''
+		WHERE
+			STATUS = 0
+		AND handleHost IS NOT NULL
+		AND handleHost != ''
+		AND (
+			(
+				timeout > 0
+				AND TIMESTAMPDIFF(SECOND, lastExeTime , NOW()) > timeout / 1000 + 10
+			)
+			OR (
+				0 >= timeout
+				AND TIMESTAMPDIFF(SECOND, lastExeTime , NOW()) > 7200
+			)
+		)
+	</update>
+	
 </mapper>  
