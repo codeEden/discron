@@ -22,6 +22,11 @@ public class JobMain {
 		Thread procMonitorThread=new Thread(procMonitor);
 		procMonitorThread.start();
 		
+		//检查是有些job因为宕机而任务没有机器执行
+		ResetJob resetJob=new ResetJob();
+		Thread resetJobThread=new Thread(resetJob);
+		resetJobThread.start();
+		
 		//启动job主进程
 		JobManager jobManager=new JobManager();
 		jobManager.run();
