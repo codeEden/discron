@@ -4,7 +4,6 @@
 package com.nt.open.discron.run;
 
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -39,12 +38,12 @@ public class ProcMonitor implements Runnable {
 	@Override
 	public void run() {
 		while(true){
-			Map<Long,ProcInfo> procMap=AppContext.APPCONTEXT.getJobProcList();
+			Map<String,ProcInfo> procMap=AppContext.APPCONTEXT.getJobProcList();
 			LogUtil.info("job进程监控,procList=={}", procMap.size());
 			if(!MapUtils.isEmpty(procMap)){
 				Date now=new Date();
-				Set<Entry<Long, ProcInfo>> entrySet=procMap.entrySet();
-				for(Entry<Long,ProcInfo> entry:entrySet){
+				Set<Entry<String, ProcInfo>> entrySet=procMap.entrySet();
+				for(Entry<String,ProcInfo> entry:entrySet){
 					ProcInfo procInfo=entry.getValue();
 					Integer timeout=procInfo.getTimeout();
 					Long startTime=procInfo.getStartTime();
@@ -75,6 +74,9 @@ public class ProcMonitor implements Runnable {
 	private void checkQuartzJob(){
 		List<Long> idList=JobFactory.JOBFACTORY.getAllJobKey();
 		LogUtil.info("检查quartz中job是否已经被转移,ids={}",idList);
+		if(CollectionUtils.isEmpty(idList)){
+			return;
+		}
 		JobDao jobDao=(JobDao) ProxyUtil.getProxy(JobDao.class);
 		List<JobPO> jobList=jobDao.getListByIds(idList);
 		if(!CollectionUtils.isEmpty(jobList)){

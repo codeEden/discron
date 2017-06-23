@@ -31,11 +31,12 @@ public class ExeThread implements Runnable{
 	private String jarPath;
 	private String id;
 	private String startTime;
+	private String procId;
 	private URLClassLoader urlClassLoader;
 
 	
 
-	public ExeThread(String jobName,Integer type, String url, String jarPath,String id,String startTime) {
+	public ExeThread(String jobName,Integer type, String url, String jarPath,String id,String startTime,String procId) {
 		super();
 		this.jobName=jobName;
 		this.type = type;
@@ -43,6 +44,7 @@ public class ExeThread implements Runnable{
 		this.jarPath = jarPath;
 		this.id=id;
 		this.startTime=startTime;
+		this.procId=procId;
 	}
 
 	public void run() {
@@ -75,6 +77,7 @@ public class ExeThread implements Runnable{
 			long time=end-start;
 			map.put("runTime", time);
 			map.put("errorMsg", errorMsg);
+			map.put("procId", procId);
 			NettyClient.sendMessage(JSON.toJSONString(map));
 		}
 	}

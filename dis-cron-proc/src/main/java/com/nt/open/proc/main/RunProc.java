@@ -46,6 +46,7 @@ public class RunProc {
 			String id=(String) paramMap.get("id");
 			String timeoutStr=(String) paramMap.get("timeout");
 			String startTime=(String) paramMap.get("startTime");
+			String procId=(String) paramMap.get("procId");
 			
 			
 //			String jobName="discrontest1";
@@ -64,7 +65,7 @@ public class RunProc {
 			
 //			Thread exeThread=new Thread(new ExeThread(jobName,Integer.parseInt(typeStr), url, rootPath,id,startTime));
 //			exeThread.start();
-			new ExeThread(jobName,Integer.parseInt(typeStr), url, rootPath,id,startTime).run();
+			new ExeThread(jobName,Integer.parseInt(typeStr), url, rootPath,id,startTime,procId).run();
 			
 			Long timeout=null;
 			if(!Strings.isNullOrEmpty(timeoutStr)){

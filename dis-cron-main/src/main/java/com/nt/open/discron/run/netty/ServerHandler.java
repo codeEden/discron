@@ -58,6 +58,7 @@ public class ServerHandler extends SimpleChannelHandler {
 					Map<String, Object> msgMap=JSON.parseObject(message);
 					String id=(String) msgMap.get("id");
 					String errorMsg=(String) msgMap.get("errorMsg");
+					String procId=(String) msgMap.get("procId");
 					long runTime=Long.parseLong(String.valueOf(msgMap.get("runTime")));
 					//获得代理类
 					JobDao jobDao=(JobDao) ProxyUtil.getProxy(JobDao.class);
@@ -71,7 +72,7 @@ public class ServerHandler extends SimpleChannelHandler {
 					JobHisDao jobHisDao=(JobHisDao) ProxyUtil.getProxy(JobHisDao.class);
 					jobHisDao.insert(jobHisPO);
 					
-					AppContext.APPCONTEXT.removeJobProc(Long.parseLong(id));
+					AppContext.APPCONTEXT.removeJobProc(procId);
 				}catch(Exception e){
 					LogUtil.error("任务回写db失败", e);
 				}

@@ -24,6 +24,7 @@ import com.nt.open.discron.log.LogUtil;
 import com.nt.open.discron.mybatis.ProxyUtil;
 import com.nt.open.discron.util.AppContext;
 import com.nt.open.discron.util.DateUtil;
+import com.nt.open.discron.util.StringUtil;
 
 /**
  * @author bjfulianqiu
@@ -50,6 +51,7 @@ public class CustomJob implements Job {
 		}
 		String cmd=null;
 		Date now=new Date();
+		String procId=StringUtil.joinStr(String.valueOf(id),"_",String.valueOf(now.getTime()));
 		//单独try catch 方式数据库出问题影响启动子进程
 		try{
 			String jarpathString = rootPath + "/dis-cron-proc.jar";
@@ -62,6 +64,7 @@ public class CustomJob implements Job {
 			paramMap.put("id", id);
 			paramMap.put("nettyPort", AppContext.APPCONTEXT.NETTY_SERVER_PORT);
 			paramMap.put("startTime", DateUtil.date2String(now));
+			paramMap.put("procId", procId);
 			
 			String paramStr=this.getParamStr(paramMap);
 			cmd = String.format("java -jar %s %s",
@@ -86,7 +89,7 @@ public class CustomJob implements Job {
 			procInfo.setStartTime(now.getTime());
 			procInfo.setTimeout(timeout);
 			
-			AppContext.APPCONTEXT.addJobProcMap(procInfo);
+			AppContext.APPCONTEXT.addJobProcMap(procId,procInfo);
 			LogUtil.info("子进程启动成功！");
 		} catch (Exception e) {
 			LogUtil.error("启动进程错误", e);

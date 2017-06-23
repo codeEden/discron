@@ -36,7 +36,7 @@ public class JobManager {
 					for(JobPO jobPO:jobList){
 						String jobName=jobPO.getJobName();
 						String cron=jobPO.getCron();
-						if(JobFactory.JOBFACTORY.isExistJob(jobName)){
+						if(JobFactory.JOBFACTORY.isExistJob(String.valueOf(jobPO.getId()))){
 //							logger.info("job已经存在于quartz,jobName={}",jobName);
 							continue;
 						}else{

@@ -23,8 +23,8 @@
 	</select>
 	
 	<select id="getListByIds" resultType="job">
-		select id,<include refid="Base_Column_List" /> from Job where status=0 and 
-		 and handleHost is not null and handleHost!='' 
+		select id,<include refid="Base_Column_List" /> from Job where status=0  
+		 and handleHost is not null and handleHost!='' and 
 		 id in 
 		<foreach collection="ids" item="item" index="index"
 			open="(" close=")" separator=",">

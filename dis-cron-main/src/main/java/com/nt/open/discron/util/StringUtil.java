@@ -14,4 +14,5 @@ public class StringUtil {
 	public static String joinStr(String... args){
 		return Joiner.on("").useForNull("null").join(args);
 	}
+	
 }
