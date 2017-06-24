@@ -103,8 +103,7 @@ public enum JobFactory {
 				}
 			}
 		} catch (SchedulerException e) {;
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LogUtil.error("获取quartz中所有job错误", e);
 		}
 		
 		return keyList;

@@ -40,10 +40,6 @@ public class JobPO {
 	 */
 	private Date lastExeTime;
 	/**
-	 * 下次执行时间
-	 */
-	private Date nextExeTime;
-	/**
 	 * (0启用、1禁止)
 	 */
 	private Integer status;
