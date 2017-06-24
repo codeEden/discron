@@ -1,34 +1,33 @@
 DROP TABLE IF EXISTS `Job`;
 CREATE TABLE `Job` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `jobName` varchar(100) NOT NULL DEFAULT '' COMMENT 'ÈÎÎñÃû³Æ',
-  `cron` varchar(100) NOT NULL DEFAULT '' COMMENT 'cron',
-  `timeout` int(11) NOT NULL DEFAULT '0' COMMENT '³¬Ê±Ê±¼ä£¨msÃë£©',
-  `type` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'type(1.http 2.class)',
-  `category` varchar(100) NOT NULL DEFAULT '' COMMENT 'ÈÎÎñÀà±ğ',
-  `url` varchar(500) NOT NULL DEFAULT '' COMMENT 'http»òÕßÀàµØÖ·',
-  `handleHost` varchar(100) NOT NULL DEFAULT '' COMMENT 'Ö´ĞĞjob»úÆ÷',
-  `lastExeTime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '×îºóÖ´ĞĞÊ±¼ä',
-  `nextExeTime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'ÏÂ´ÎÖ´ĞĞÊ±¼ä',
-  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '(0ÆôÓÃ¡¢1½ûÖ¹)',
-  `updateTime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP COMMENT 'ĞŞ¸ÄÊ±¼ä',
-  `createTime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '´´½¨Ê±¼ä',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `id` bigint(20) NOT NULL auto_increment,
+  `jobName` varchar(100) NOT NULL default '' COMMENT 'ä»»åŠ¡åç§°',
+  `cron` varchar(100) NOT NULL default '' COMMENT 'cron',
+  `timeout` int(11) NOT NULL default '0' COMMENT 'è¶…æ—¶æ—¶é—´ï¼ˆmsç§’ï¼‰',
+  `type` tinyint(4) NOT NULL default '1' COMMENT 'type(1.http 2.class)',
+  `category` varchar(100) NOT NULL default '' COMMENT 'ä»»åŠ¡ç±»åˆ«',
+  `url` varchar(500) NOT NULL default '' COMMENT 'httpæˆ–è€…ç±»åœ°å€',
+  `handleHost` varchar(100) NOT NULL default '' COMMENT 'æ‰§è¡Œjobæœºå™¨',
+  `lastExeTime` timestamp NOT NULL default '0000-00-00 00:00:00' COMMENT 'æœ€åæ‰§è¡Œæ—¶é—´',
+  `status` tinyint(4) NOT NULL default '0' COMMENT '(0å¯ç”¨ã€1ç¦æ­¢)',
+  `updateTime` timestamp NOT NULL default '0000-00-00 00:00:00' on update CURRENT_TIMESTAMP COMMENT 'ä¿®æ”¹æ—¶é—´',
+  `createTime` timestamp NOT NULL default '0000-00-00 00:00:00' COMMENT 'åˆ›å»ºæ—¶é—´',
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `JobHis`;
 CREATE TABLE `JobHis` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL auto_increment,
   `jobId` bigint(20) NOT NULL,
-  `jobName` varchar(100) NOT NULL DEFAULT '' COMMENT 'ÈÎÎñÃû³Æ',
-  `cron` varchar(100) NOT NULL DEFAULT '' COMMENT 'cron',
-  `timeout` int(11) NOT NULL DEFAULT '0' COMMENT '³¬Ê±Ê±¼ä£¨sÃë£©',
-  `type` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'type(1.http 2.class)',
-  `url` varchar(500) NOT NULL DEFAULT '' COMMENT 'http»òÕßÀàµØÖ·',
-  `lastExeTime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '×îºóÖ´ĞĞÊ±¼ä',
+  `jobName` varchar(100) NOT NULL default '' COMMENT 'ä»»åŠ¡åç§°',
+  `cron` varchar(100) NOT NULL default '' COMMENT 'cron',
+  `timeout` int(11) NOT NULL default '0' COMMENT 'è¶…æ—¶æ—¶é—´ï¼ˆsç§’ï¼‰',
+  `type` tinyint(4) NOT NULL default '1' COMMENT 'type(1.http 2.class)',
+  `url` varchar(500) NOT NULL default '' COMMENT 'httpæˆ–è€…ç±»åœ°å€',
+  `lastExeTime` timestamp NOT NULL default '0000-00-00 00:00:00' COMMENT 'æœ€åæ‰§è¡Œæ—¶é—´',
   `handleHost` varchar(100) NOT NULL,
-  `executeTimes` bigint(20) NOT NULL DEFAULT '0' COMMENT 'Ö´ĞĞÊ±³£ £¨msÃë£©',
+  `executeTimes` bigint(20) NOT NULL default '0' COMMENT 'æ‰§è¡Œæ—¶å¸¸ ï¼ˆmsç§’ï¼‰',
   `errorMsg` varchar(4000) NOT NULL,
-  `createTime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '´´½¨Ê±¼ä',
-  PRIMARY KEY (`id`)
+  `createTime` timestamp NOT NULL default '0000-00-00 00:00:00' COMMENT 'åˆ›å»ºæ—¶é—´',
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
