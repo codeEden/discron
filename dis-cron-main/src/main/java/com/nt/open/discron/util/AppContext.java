@@ -8,6 +8,7 @@ import java.util.concurrent.ConcurrentMap;
 
 import com.google.common.collect.Maps;
 import com.nt.open.discron.entity.ProcInfo;
+import com.nt.open.discron.log.LogUtil;
 
 /**
  * @author bjfulianqiu
@@ -23,6 +24,7 @@ public enum AppContext {
 	
 	
 	public void addJobProcMap(String key,ProcInfo process){
+		LogUtil.info("addProcMap,key=", key);
 		jobProcMap.putIfAbsent(key, process);
 	}
 	

@@ -4,6 +4,7 @@
 package com.nt.open.discron.run;
 
 import com.nt.open.discron.dao.JobDao;
+import com.nt.open.discron.log.LogUtil;
 import com.nt.open.discron.mybatis.ProxyUtil;
 
 /**
@@ -16,8 +17,10 @@ public class ResetJob implements Runnable{
 
 	@Override
 	public void run() {
+		
 		JobDao jobDao=(JobDao) ProxyUtil.getProxy(JobDao.class);
-		jobDao.resetJob();
+		int count=jobDao.resetJob();
+		LogUtil.info("重置任务数量,count={}", count);
 		
 		try {
 			Thread.sleep(INTERVAL);

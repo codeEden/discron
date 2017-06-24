@@ -5,19 +5,20 @@ package com.nt.open.discron.quartz;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
 import org.quartz.JobBuilder;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
-import org.quartz.JobExecutionContext;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
+import org.quartz.impl.matchers.GroupMatcher;
 
 import com.google.common.collect.Lists;
 import com.nt.open.discron.log.LogUtil;
@@ -92,12 +93,16 @@ public enum JobFactory {
 	public List<Long> getAllJobKey(){
 		List<Long> keyList=Lists.newArrayList();
 		try {
-			List<JobExecutionContext> jobList=scheduler.getCurrentlyExecutingJobs();
-			for(JobExecutionContext jobExecutionContext:jobList){
-				String jobName=jobExecutionContext.getJobDetail().getKey().getName();
-				keyList.add(Long.parseLong(jobName));
+			List<String> groupNames=scheduler.getJobGroupNames();
+			for(String groupName:groupNames){
+				GroupMatcher<JobKey> groupMatcher=GroupMatcher.groupEquals(groupName);
+				Set<JobKey> jobKeySet=scheduler.getJobKeys(groupMatcher);
+				for(JobKey jobKey:jobKeySet){
+					String jobName=jobKey.getName();
+					keyList.add(Long.parseLong(jobName));
+				}
 			}
-		} catch (SchedulerException e) {
+		} catch (SchedulerException e) {;
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
