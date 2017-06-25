@@ -17,6 +17,7 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import com.nt.open.discron.dao.JobDao;
 import com.nt.open.discron.entity.ProcInfo;
@@ -32,6 +33,8 @@ import com.nt.open.discron.util.StringUtil;
  */
 @DisallowConcurrentExecution
 public class CustomJob implements Job {
+	
+	private final String ENCODE="UTF-8";
 
 	/* (non-Javadoc)
 	 * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
@@ -42,6 +45,7 @@ public class CustomJob implements Job {
 		String url=context.getJobDetail().getJobDataMap().getString("url");
 		Integer timeout=context.getJobDetail().getJobDataMap().getInt("timeout");
 		String jobName=context.getJobDetail().getJobDataMap().getString("jobName");
+		String param=context.getJobDetail().getJobDataMap().getString("param");
 		String rootPath = "";
 		try {
 			File file = new File(this.getClass().getResource("/").toURI());
@@ -65,6 +69,9 @@ public class CustomJob implements Job {
 			paramMap.put("nettyPort", AppContext.APPCONTEXT.NETTY_SERVER_PORT);
 			paramMap.put("startTime", DateUtil.date2String(now));
 			paramMap.put("procId", procId);
+			if(!Strings.isNullOrEmpty(param)){
+				paramMap.put("param", URLEncoder.encode(param, ENCODE));
+			}
 			
 			String paramStr=this.getParamStr(paramMap);
 			cmd = String.format("java -jar %s %s",
@@ -107,7 +114,7 @@ public class CustomJob implements Job {
 			result.append("=");
 			result.append(String.valueOf(entry.getValue()));
 		}
-		return URLEncoder.encode(result.toString(),"UTF-8");
+		return URLEncoder.encode(result.toString(),ENCODE);
 	}
 
 }

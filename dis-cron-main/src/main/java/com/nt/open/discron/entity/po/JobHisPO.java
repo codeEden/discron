@@ -43,6 +43,10 @@ public class JobHisPO {
 	 * 执行job机器
 	 */
 	private String handleHost;
+	/**
+	 * job参数
+	 */
+	private String param;
 	
 	private String errorMsg;
 	
@@ -57,6 +61,7 @@ public class JobHisPO {
 		this.url=jobPO.getUrl();
 		this.lastExeTime=jobPO.getLastExeTime();
 		this.handleHost=jobPO.getHandleHost();
+		this.param=jobPO.getParam();
 	}
 	
 }

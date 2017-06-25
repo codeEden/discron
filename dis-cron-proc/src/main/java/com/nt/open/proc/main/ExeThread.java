@@ -12,12 +12,16 @@ import java.util.List;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.nt.open.proc.entity.emun.JobEnum;
 import com.nt.open.proc.netty.NettyClient;
 import com.nt.open.proc.util.HTTPUtils;
 import com.nt.open.proc.util.LogUtil;
+import com.nt.open.proc.util.StringUtil;
+
+import lombok.Setter;
 
 /**
  * @author bjfulianqiu
@@ -25,46 +29,55 @@ import com.nt.open.proc.util.LogUtil;
  */
 public class ExeThread implements Runnable{
 	
+	@Setter
 	private String jobName;
+	@Setter
 	private Integer type;
+	@Setter
 	private String url;
+	@Setter
 	private String jarPath;
+	@Setter
 	private String id;
+	@Setter
 	private String startTime;
+	@Setter
 	private String procId;
 	private URLClassLoader urlClassLoader;
+	@Setter
+	private String jobParam;
 
 	
 
-	public ExeThread(String jobName,Integer type, String url, String jarPath,String id,String startTime,String procId) {
-		super();
-		this.jobName=jobName;
-		this.type = type;
-		this.url = url;
-		this.jarPath = jarPath;
-		this.id=id;
-		this.startTime=startTime;
-		this.procId=procId;
-	}
 
 	public void run() {
 		long start=System.currentTimeMillis();
 		String errorMsg="";
 		try{
-			LogUtil.info("runProc start....jobName="+jobName);
+			LogUtil.info(StringUtil.joinStr("runProc start....jobName=",jobName));
+			
+			LogUtil.info(StringUtil.joinStr("url=",url));
+			LogUtil.info(StringUtil.joinStr("jobParam=",jobParam));
 			
 			if(type==JobEnum.Type.HTTP.getCode()){
 				Thread.sleep(30*1000);
+				if(!Strings.isNullOrEmpty(jobParam)){
+					if(url.contains("?")){
+						url=StringUtil.joinStr(url,jobParam);
+					}else{
+						url=StringUtil.joinStr(url,"?",jobParam);
+					}
+				}
 				HTTPUtils.sendHttpOrHttps(url, "GET", null, null);
 			}else if(type==JobEnum.Type.CLASS.getCode()){
 				urlClassLoader = new URLClassLoader(getUrls(jarPath), Thread.currentThread().getContextClassLoader());
 				Class<?> exeClass=urlClassLoader.loadClass(url);
 				Method method=exeClass.getMethod("execute", String.class);
 				Object objInstance=exeClass.newInstance();
-				Object resultObj=method.invoke(objInstance, "proc_Test");
+				Object resultObj=method.invoke(objInstance, jobParam==null?"":jobParam);
 				LogUtil.info("runResult="+resultObj);
 			}
-			LogUtil.info("runProc end....jobName="+jobName);
+			LogUtil.info(StringUtil.joinStr("runProc end....jobName=",jobName));
 		}catch(Exception e){
 			errorMsg=getStatcTrace(e.getMessage(),e);
 			LogUtil.error("任务执行错误",e);

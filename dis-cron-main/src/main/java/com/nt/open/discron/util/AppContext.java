@@ -24,7 +24,7 @@ public enum AppContext {
 	
 	
 	public void addJobProcMap(String key,ProcInfo process){
-		LogUtil.info("addProcMap,key=", key);
+		LogUtil.info("addProcMap,key={}", key);
 		jobProcMap.putIfAbsent(key, process);
 	}
 	

@@ -20,6 +20,8 @@ public class RunProc {
 	
 	private final static long CHECK_INTERVEL=200L;
 	
+	private final static String ENCODE="UTF-8";
+	
 	private static Map<String,Object> parseParam(String paramStr){
 		Map<String,Object> paramMap=Maps.newHashMap();
 		if(!Strings.isNullOrEmpty(paramStr)){
@@ -36,7 +38,7 @@ public class RunProc {
 
 	public static void main(String[] args) throws UnsupportedEncodingException {
 		try{
-			String param=URLDecoder.decode(args[0],"UTF-8");
+			String param=URLDecoder.decode(args[0],ENCODE);
 			Map<String,Object> paramMap=parseParam(param);
 			String jobName=(String) paramMap.get("jobName");
 			String nettyPort=(String) paramMap.get("nettyPort");
@@ -47,14 +49,11 @@ public class RunProc {
 			String timeoutStr=(String) paramMap.get("timeout");
 			String startTime=(String) paramMap.get("startTime");
 			String procId=(String) paramMap.get("procId");
+			String jobParam=null;
+			if(paramMap.get("param")!=null){
+				jobParam=URLDecoder.decode((String)paramMap.get("param"), ENCODE);
+			}
 			
-			
-//			String jobName="discrontest1";
-//			String rootPath="D:/workspace/open_source/dis-cron/dis-cron-main/target";
-//			String url="com.test.Test";
-//			String typeStr="2";
-//			String timeout="2000";
-//			String nettyPort="8192";
 			
 			AppContext.APPCONTEXT.setJobName(jobName);
 			AppContext.APPCONTEXT.setNettyPort(Integer.parseInt(nettyPort));
@@ -65,7 +64,16 @@ public class RunProc {
 			
 //			Thread exeThread=new Thread(new ExeThread(jobName,Integer.parseInt(typeStr), url, rootPath,id,startTime));
 //			exeThread.start();
-			new ExeThread(jobName,Integer.parseInt(typeStr), url, rootPath,id,startTime,procId).run();
+			ExeThread exeThread=new ExeThread();
+			exeThread.setId(id);
+			exeThread.setJarPath(rootPath);
+			exeThread.setJobName(jobName);
+			exeThread.setJobParam(jobParam);
+			exeThread.setProcId(procId);
+			exeThread.setStartTime(startTime);
+			exeThread.setType(Integer.parseInt(typeStr));
+			exeThread.setUrl(url);
+			exeThread.run();
 			
 			Long timeout=null;
 			if(!Strings.isNullOrEmpty(timeoutStr)){

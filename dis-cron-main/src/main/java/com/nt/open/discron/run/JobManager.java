@@ -46,6 +46,7 @@ public class JobManager {
 							jobDataMap.put("type", jobPO.getType());
 							jobDataMap.put("url", jobPO.getUrl());
 							jobDataMap.put("timeout", jobPO.getTimeout());
+							jobDataMap.put("param", jobPO.getParam());
 							JobFactory.JOBFACTORY.addJob(String.valueOf(jobPO.getId()),String.valueOf(jobPO.getId()), cron,jobDataMap);
 						}
 					}

@@ -4,7 +4,7 @@
 <mapper namespace="com.nt.open.discron.dao.JobDao">
 
 	<sql id="Base_Column_List">
-		 jobName,cron,timeout,type,url,lastExeTime,status,updateTime,createTime,category,handleHost
+		 jobName,cron,timeout,type,url,lastExeTime,status,updateTime,createTime,category,handleHost,param
 	</sql>
 	<sql id="pager">
 		LIMIT #{start}, #{pageSize}
@@ -14,7 +14,7 @@
 		useGeneratedKeys="true" parameterType="job">
 		insert into Job(<include refid="Base_Column_List" />) 
 		values 
-		( #{jobName},#{cron},#{timeout},#{type},#{url},#{lastExeTime},#{status},#{updateTime},#{createTime},#{category},#{handleHost});
+		( #{jobName},#{cron},#{timeout},#{type},#{url},#{lastExeTime},#{status},#{updateTime},#{createTime},#{category},#{handleHost},#{param});
 	</insert>
 	
 	<select id="get" resultType="job">

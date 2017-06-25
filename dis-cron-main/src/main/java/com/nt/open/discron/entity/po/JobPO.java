@@ -48,6 +48,11 @@ public class JobPO {
 	 */
 	private String handleHost;
 	
+	/**
+	 * job参数
+	 */
+	private String param;
+	
 	private Date updateTime;
 	
 	private Date createTime;
