@@ -11,6 +11,7 @@
     <module>dis-cron-main</module>
     <module>dis-cron-proc</module>
     <module>dis-cron-admin</module>
+    <module>dis-cron-spring</module>
   </modules>
   
   <properties>
