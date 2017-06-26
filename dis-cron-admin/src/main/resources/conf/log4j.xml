@@ -14,7 +14,7 @@
 	
 	<!-- 系统启动日志输出文件 -->
     <appender name="fileAppender" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="File" value="${catalina.home}/logs/system.log"/>
+		<param name="File" value="${catalina.home}/logs/admin-logs.log"/>
 		<param name="DatePattern" value="'.'yyyy-MM-dd"/>
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%d %p [%c] - %m%n"/>
