@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:task="http://www.springframework.org/schema/task"  
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="  
+         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd 
+   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+   http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd  
+   http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+   http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
+   http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd
+   http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.1.xsd ">
+		
+	<!-- 自动扫描组件 -->
+	<context:component-scan base-package="com.nt.open.discron"></context:component-scan>
+	<!-- 配置支持注解方式的Handler -->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
+	<!-- 配置支持注解方式的Method Handler -->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<bean
+					class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+					<property name="supportedMediaTypes">
+						<list>  
+	                        <value>application/xml;charset=UTF-8</value>
+	                        <value>application/json;charset=UTF-8</value>  
+	                    </list>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<mvc:resources location="/resources/" mapping="/resources/**"/>
+
+	<!-- <bean id="springContextHelper"
+		class="com.netease.wx.cms.common.util.spring.SpringContextHelper"></bean> -->
+	
+	
+	<bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+        <property name="resourceLoaderPath" value="/WEB-INF"/>
+        <property name="configLocation" value="classpath:/conf/velocity.properties"/>
+        <property name="velocityProperties">
+            <props>
+                <prop key="input.encoding">utf-8</prop>
+                <prop key="output.encoding">utf-8</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+        <property name="suffix" value=".vm"/>
+        <property name="prefix" value="/"/>
+        <!-- 使用springMacro的对象 -->
+        <property name="exposeSpringMacroHelpers" value="true"/>
+        <property name="requestContextAttribute" value="content"/>
+        <property name="exposeRequestAttributes" value="true"/>
+        <property name="exposeSessionAttributes" value="true"/>
+        <property name="contentType" value="text/html;charset=UTF-8"/>
+        <!-- spring的日期格式化 -->
+        <property name="dateToolAttribute" value="dateTool"/>
+        <!-- velocity toolbox -->
+        <property name="toolboxConfigLocation" value="/WEB-INF/toolbox.xml"/>
+    </bean>
+	
+	<!-- <bean id="weixinMsgTask"  
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+		<property name="targetObject">  
+			<bean class="com.netease.wx.cms.task.WeixinMsgTask" />  
+		</property>  
+		<property name="targetMethod" value="runTask" />
+		<property name="concurrent" value="false" />作业不并发调度 ，上一次任务执行完成后，才执行下一次  
+	</bean>  
+	
+	
+	<bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">  
+		<property name="jobDetail" ref="weixinMsgTask" />  
+		<property name="startDelay" value="0" />调度工厂实例化后，经过0秒开始执行调度  
+		<property name="repeatInterval" value="120000" />每2分钟调度一次  
+	</bean>   -->
+	<task:annotation-driven/>
+	<context:annotation-config/>
+</beans>
