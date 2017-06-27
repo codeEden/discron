@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.nt.open</groupId>
     <artifactId>dis-cron</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${discron.version}</version>
   </parent>
   <artifactId>dis-cron-proc</artifactId>
 </project>

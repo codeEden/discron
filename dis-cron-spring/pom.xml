@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.nt.open</groupId>
 		<artifactId>dis-cron</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>${discron.version}</version>
 	</parent>
 	<artifactId>dis-cron-spring</artifactId>
 
@@ -15,8 +15,8 @@
 	<dependencies>
 		<dependency>
 		    <groupId>com.nt.open</groupId>
-		    <artifactId>dis-cron-main</artifactId>
-		    <version>0.0.1-SNAPSHOT</version>
+		    <artifactId>dis-cron-core</artifactId>
+		    <version>${discron.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
