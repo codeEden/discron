@@ -10,18 +10,18 @@
 
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="../../../resources/bootstrap/js/bootstrap.min.js"></script>
-<script src="../../../resources/js/showAll.js"></script>
+<script src="../../../resources/js/jobManager.js"></script>
 <script src="../../../resources/public/jquery.twbsPagination.min.js"></script>
 
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>微信消息列表</title>
+		<title>job列表</title>
 	</head>
 	<body>
 		<div class="container">
 			<div class="row">
-				微信消息列表
+				job列表
 			</div>
 			<div class="row">
 				<div class="col-md-10 request-list" style="width:1092px;">
@@ -29,12 +29,15 @@
 	                    <thead>
 	                        <tr>
 	                            <td>序号</td>
-	                            <td style='width:300px;'>消息内容</td>
+	                            <td style='width:300px;'>job名称</td>
+	                            <td>cron</td>
+	                            <td>超时时间</td>
+	                            <td>任务类型</td>
+	                            <td>url</td>
+	                            <td>最后执行时间</td>
+	                            <td>当前处理机器</td>
 	                            <td>状态</td>
-	                            <td>失败次数</td>
-	                            <td>备注</td>
 	                            <td>创建时间</td>
-	                            <td>修改时间</td>
 	                        </tr>
 	                    </thead>
 	                    <tbody id="tbody">

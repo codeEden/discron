@@ -22,6 +22,10 @@ public interface JobDao {
 	
 	public List<JobPO> getList(JobPO jobPO);
 	
+	public List<JobPO> getListByPage(@Param("start") Integer start,@Param("pageSize") Integer pageSize);
+	
+	public Integer count();
+	
 	public int registerHandleHost(JobPO jobPO);
 	
 	public List<JobPO> getListByIds(@Param("ids")List<Long> ids);

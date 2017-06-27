@@ -5,7 +5,7 @@ function initTab(page){
 	var parameter = JSON.stringify(reqeustParameters);
 	
 	$.ajax({
-		url : '/wxmsg/list',
+		url : '/jobmanager/list',
 		type : 'post',
 		data : parameter,
 		dataType : 'json',
