@@ -26,7 +26,7 @@ public class JobManagerServiceImpl implements JobManagerService {
 	public JobPageResult list(RequestVO requestVO) {
 		JobPageResult jobPageResult=new JobPageResult();
 		JobDao jobDao=(JobDao) ProxyUtil.getProxy(JobDao.class);
-		Integer count=jobDao.count();
+		Integer count=jobDao.getCount();
 		if(count>0){
 			List<JobPO> list=jobDao.getListByPage(requestVO.getStart(), requestVO.getPageSize());
 			jobPageResult.setResultList(list);

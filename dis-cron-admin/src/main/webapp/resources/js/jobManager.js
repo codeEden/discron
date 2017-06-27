@@ -37,21 +37,40 @@ function showTableData(results){
 		var status=item.status;
 		var statusStr=getStatusStr(status);
 		trs = trs + "<tr><td class='text-center'>" + index + "</td>";
+		
+//		<td>序号</td>
+//        <td style='width:300px;'>job名称</td>
+//        <td>cron</td>
+//        <td>超时时间</td>
+//        <td>任务类型</td>
+//        <td>url</td>
+//        <td>最后执行时间</td>
+//        <td>当前处理机器</td>
+//        <td>状态</td>
+//        <td>创建时间</td>
+		
 		trs = trs
-				+ "<td class='text-center'><textarea style='width:300px;word-break:break-all;'>"
-				+ item.msg
-				+ "</textarea></td><td class='text-left'>"
-				+ statusStr
+				+ "<td class='text-center'>"
+				+ item.jobName
+				+ "</td><td class='text-left'>"
+				+ item.cron
 				+ "</td>"
 				+ "<td class='text-center'>"
-				+ item.failCount
+				+ item.timeout
 				+ "</td>"
 				+ "<td class='text-center'>"
-				+ item.remark
+				+ item.type
+				+ "</td>"
+				+ "<td class='text-center'>"
+				+ item.url
 				+ "</td><td class='text-center'>"
-				+ item.createDate
+				+ item.lastExeTime
 				+ "</td><td class='text-center'>"
-				+item.operateDate
+				+item.handleHost
+				+ "</td><td class='text-center'>"
+				+statusStr
+				+ "</td><td class='text-center'>"
+				+item.createTime
 				+ "</td></tr>";
 	}
 	$("#tbody").html(trs);
@@ -59,14 +78,10 @@ function showTableData(results){
 
 function getStatusStr(status){
 	var statusStr="";
-	if(status==0){
-		statusStr="未开始";
-	}else if(status==1){
-		statusStr="处理中";
-	}else if(status==2){
-		statusStr="完成";
-	}else if(status==-1){
-		statusStr="失败";
+	if(status==1){
+		statusStr="禁用";
+	}else if(status==0){
+		statusStr="正常";
 	}
 	return statusStr;
 }

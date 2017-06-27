@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.nt.open.discron.common.util.CommonStatusCode;
 import com.nt.open.discron.common.util.Result;
@@ -58,7 +59,8 @@ public class JobMangerController {
      * @param resp
      * @throws Exception
      */
-    @RequestMapping(value="/list", method=RequestMethod.GET)
+    @RequestMapping(value="/list", method=RequestMethod.POST)
+    @ResponseBody
     public Result getList(@RequestBody RequestVO requestVO,HttpServletRequest req, HttpServletResponse resp)
             throws Exception {
     	Result result=new Result();

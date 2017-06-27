@@ -24,7 +24,7 @@ public interface JobDao {
 	
 	public List<JobPO> getListByPage(@Param("start") Integer start,@Param("pageSize") Integer pageSize);
 	
-	public Integer count();
+	public Integer getCount();
 	
 	public int registerHandleHost(JobPO jobPO);
 	

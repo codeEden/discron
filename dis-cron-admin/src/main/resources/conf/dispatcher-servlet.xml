@@ -81,6 +81,25 @@
 		<property name="startDelay" value="0" />调度工厂实例化后，经过0秒开始执行调度  
 		<property name="repeatInterval" value="120000" />每2分钟调度一次  
 	</bean>   -->
-	<task:annotation-driven/>
+	<bean
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<ref bean="jsonConverter" />
+				<ref bean="stringHttpMessageConverter" />
+			</list>
+		</property>
+	</bean>
+	    
+
+	<bean id="jsonConverter"
+		class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+		<property name="supportedMediaTypes" value="application/json" />
+	</bean>
+
+	<bean id="stringHttpMessageConverter"
+		class="org.springframework.http.converter.StringHttpMessageConverter">
+		<property name="supportedMediaTypes" value="text/plain" />
+	</bean>
 	<context:annotation-config/>
 </beans>

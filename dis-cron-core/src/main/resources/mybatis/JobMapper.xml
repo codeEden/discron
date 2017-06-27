@@ -38,9 +38,9 @@
 	
 	<select id="getListByPage" resultType="job">
 		select id,<include refid="Base_Column_List" /> from Job order by createTime desc 
-		<include refid="pager"></include>
+		<include refid="pager"/>
 	</select>
-	<select id="count" resultType="Integer">
+	<select id="getCount" resultType="int">
 		select count(1) from Job 
 	</select>
 	<select id="getList" parameterType="job" resultType="job">
