@@ -20,5 +20,5 @@ public class JobPageResult {
 
 	private PageCondition pageInfo;
 	
-	private List<JobPO> resultList;
+	private List<JobVo> resultList;
 }
