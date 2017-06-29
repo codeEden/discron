@@ -24,8 +24,8 @@
 				job列表
 			</div>
 			<div class="row">
-				<div class="col-md-10 request-list" style="width:1092px;">
-					<table class="table table-bordered" style="width: 1092px;word-break:break-all;">
+				<div class="col-md-10 request-list" style="width:100%;">
+					<table class="table table-bordered" style="width: 100%;word-break:break-all;">
 	                    <thead>
 	                        <tr>
 	                            <td>序号</td>

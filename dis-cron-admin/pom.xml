@@ -131,7 +131,4 @@
 		  <version>${commons-validator.version}</version>
 		</dependency>
 	</dependencies>
-	<build>
-		<finalName>dis-cron-admin</finalName>
-	</build>
 </project>
